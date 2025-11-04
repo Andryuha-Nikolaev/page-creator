@@ -12,14 +12,14 @@
 - We recommend using **[proto](https://moonrepo.dev/proto)** for managing Node.js and pnpm versions to ensure consistent development environment across the team.
 - If the project contains a .env.example file, make a copy and rename it to .env
 
-## Installation
+## 📥 Installation
 
 ```bash
 # Install dependencies
 pnpm install
 ```
 
-## Available Scripts
+## 🛠️ Available Scripts
 
 ```bash
 # Start development server
