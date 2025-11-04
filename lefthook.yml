@@ -1,0 +1,56 @@
+min_version: 1.11.16
+
+only_develop_branch: &only_develop_branch
+  - ref: 'develop'
+
+pre-merge-commit:
+  only: *only_develop_branch
+  jobs:
+    - name: &frontend_name frontend
+      root: &frontend_directory 'source-code/frontend/'
+      tags: &frontend_tags
+        - frontend
+      group:
+        name: check
+        parallel: true
+        jobs:
+          - &frontend_typecheck_job
+            name: typecheck
+            run: 'pnpm tsc --noEmit'
+            glob: '*.{ts,tsx,svelte}'
+            only: *only_develop_branch
+
+          - &frontend_eslint_job
+            name: eslint
+            run: 'pnpm eslint ./src && eslint ./app'
+            glob: '*.{js,ts,jsx,tsx,svelte}'
+            only: *only_develop_branch
+
+          - &frontend_steiger_job
+            name: steiger
+            run: 'pnpm steiger ./src'
+            only: *only_develop_branch
+
+pre-commit:
+  jobs:
+    - name: *frontend_name
+      root: *frontend_directory
+      tags: *frontend_tags
+      group:
+        jobs:
+          - &frontend_prettier_job
+            name: format
+            run: 'pnpm prettier --write --no-error-on-unmatched-pattern {staged_files}'
+            glob: '*.{js,cjs,mjs,ts,tsx,css,scss,json,md,mdx,yml}'
+            stage_fixed: true
+
+          - name: check
+            group:
+              parallel: true
+              jobs:
+                - <<: *frontend_steiger_job
+
+                - <<: *frontend_typecheck_job
+
+                - <<: *frontend_eslint_job
+                  run: 'pnpm eslint {staged_files}'
