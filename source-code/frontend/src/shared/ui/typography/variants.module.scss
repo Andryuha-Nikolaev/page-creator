@@ -1,0 +1,38 @@
+@use "$styles/mixins/typography";
+
+.headingH1 {
+	@include typography.h1;
+}
+
+.headingH2 {
+	@include typography.h2;
+}
+
+.headingH3 {
+	@include typography.h3;
+}
+
+.headingH4 {
+	@include typography.h4;
+}
+.textLg {
+	@include typography.large-text;
+}
+.textMd {
+	@include typography.main-text;
+}
+
+.textAdditional {
+	@include typography.additional-text;
+}
+
+.textSm {
+	@include typography.small-text;
+}
+.textHelper {
+	@include typography.helper-text;
+}
+
+.link1 {
+	@include typography.link-1;
+}

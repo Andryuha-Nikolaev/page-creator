@@ -1,0 +1,61 @@
+@use "$styles/variables/colors";
+@use "$styles/mixins/typography";
+
+html {
+	font-size: var(--font-size_small);
+	@media (min-width: 320px) {
+		font-size: var(--font-size_normal);
+	}
+}
+
+html,
+body {
+	display: flex;
+	flex-direction: column;
+	flex-grow: 1;
+	min-height: 100%;
+}
+
+main {
+	display: flex;
+	flex-direction: column;
+	flex-grow: 1;
+}
+
+body {
+	width: 100%;
+	line-height: var(--font-line-height);
+	font-family: sans-serif;
+	font-weight: 400;
+	background-color: colors.$black;
+	color: colors.$white;
+}
+
+h1 {
+	@include typography.h1;
+}
+
+h2 {
+	@include typography.h2;
+}
+
+h3 {
+	@include typography.h3;
+}
+
+h4 {
+	@include typography.h4;
+}
+
+p {
+	@include typography.main-text;
+}
+
+small {
+	@include typography.small-text;
+}
+
+a,
+button {
+	color: inherit;
+}

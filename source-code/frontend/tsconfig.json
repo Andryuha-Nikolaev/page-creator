@@ -19,8 +19,14 @@
       }
     ],
     "paths": {
-      "@/*": ["./src/*"]
-    }
+			"$styles*": ["./src/shared/styles/*"],
+			"$shared/*": ["./src/shared/*"],
+			"$features/*": ["./src/features/*"],
+			"$widgets/*": ["./src/widgets/*"],
+			"$pages/*": ["./src/pages/*"],
+			"$app/*": ["./app/*"],
+			"$/*": ["./src/*"]
+		}
   },
   "include": [
     "next-env.d.ts",
