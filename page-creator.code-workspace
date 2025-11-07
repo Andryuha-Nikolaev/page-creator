@@ -1,0 +1,21 @@
+{
+  "folders": [
+    {
+      "name": "root",
+      "path": "."
+    },
+    {
+      "name": "backend",
+      "path": "./source-code/backend"
+    },
+    {
+      "name": "frontend",
+      "path": "./source-code/frontend"
+    }
+  ],
+  "settings": {
+    "files.exclude": {
+      "source-code": true
+    }
+  }
+}

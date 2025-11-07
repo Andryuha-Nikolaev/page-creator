@@ -12,6 +12,7 @@
     "lint": "pnpm lint:types && pnpm lint:code && pnpm lint:arch",
     "prepare": "is-in-ci || lefthook install"
   },
+  "packageManager": "pnpm@10.18.3",
   "dependencies": {
     "next": "16.0.1",
     "react": "19.2.0",
