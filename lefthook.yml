@@ -7,7 +7,7 @@ pre-merge-commit:
   only: *only_develop_branch
   jobs:
     - name: &frontend_name frontend
-      root: &frontend_directory 'source-code/frontend'
+      root: &frontend_directory 'source-code/frontend/'
       tags: &frontend_tags
         - frontend
       group:
