@@ -15,7 +15,7 @@ const typographyVariants = {
 
 type TypographyVariants = keyof typeof typographyVariants;
 
-const aaaa = "";
+const aasaa = "";
 
 export function typography(variant: TypographyVariants) {
 	return typographyVariants[variant];
