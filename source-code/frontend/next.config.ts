@@ -10,7 +10,7 @@ const nextConfig: NextConfig = {
 				pathname: "**",
 			},
 		],
-		qualities: [85, 95, 100],
+		qualities: [90, 100],
 	},
 	reactCompiler: true,
 };
