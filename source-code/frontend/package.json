@@ -1,44 +1,45 @@
 {
-  "name": "frontend",
-  "version": "0.1.0",
-  "private": true,
-  "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "lint:types": "tsc --noEmit",
-    "lint:code": "eslint ./src && eslint ./app",
-    "lint:arch": "steiger ./src",
-    "lint": "pnpm lint:types && pnpm lint:code && pnpm lint:arch",
-    "prepare": "is-in-ci || lefthook install"
-  },
-  "packageManager": "pnpm@10.18.3",
-  "dependencies": {
-    "next": "16.0.1",
-    "react": "19.2.0",
-    "react-dom": "19.2.0",
-    "sass-embedded": "^1.93.3"
-  },
-  "devDependencies": {
-    "@feature-sliced/steiger-plugin": "^0.5.7",
-    "@m-social/eslint-config-next": "^1.1.0",
-    "@m-social/prettier-config-react": "^1.0.0",
-    "@types/node": "^20",
-    "@types/react": "^19",
-    "@types/react-dom": "^19",
-    "babel-plugin-react-compiler": "1.0.0",
-    "eslint": "^9",
-    "eslint-config-next": "16.0.1",
-    "is-in-ci": "^2.0.0",
-    "lefthook": "^2.0.2",
-    "prettier": "^3.6.2",
-    "steiger": "^0.5.11",
-    "typescript": "^5"
-  },
-  "prettier": "@m-social/prettier-config-react",
-  "pnpm": {
-    "ignoredBuiltDependencies": [
-      "lefthook"
-    ]
-  }
+	"name": "frontend",
+	"version": "0.1.0",
+	"private": true,
+	"scripts": {
+		"dev": "next dev",
+		"build": "next build",
+		"start": "next start",
+		"lint:types": "tsc --noEmit",
+		"lint:code": "eslint ./src",
+		"lint:arch": "steiger ./src",
+		"lint": "pnpm lint:types && pnpm lint:code && pnpm lint:arch",
+		"prepare": "is-in-ci || lefthook install"
+	},
+	"packageManager": "pnpm@10.18.3",
+	"dependencies": {
+		"next": "16.0.1",
+		"react": "19.2.0",
+		"react-dom": "19.2.0",
+		"sass-embedded": "^1.93.3",
+		"sharp": "^0.34.5"
+	},
+	"devDependencies": {
+		"@feature-sliced/steiger-plugin": "^0.5.7",
+		"@m-social/eslint-config-next": "^1.1.0",
+		"@m-social/prettier-config-react": "^1.0.0",
+		"@types/node": "^20",
+		"@types/react": "^19",
+		"@types/react-dom": "^19",
+		"babel-plugin-react-compiler": "1.0.0",
+		"eslint": "^9",
+		"eslint-config-next": "16.0.1",
+		"is-in-ci": "^2.0.0",
+		"lefthook": "^2.0.2",
+		"prettier": "^3.6.2",
+		"steiger": "^0.5.11",
+		"typescript": "^5"
+	},
+	"prettier": "@m-social/prettier-config-react",
+	"pnpm": {
+		"ignoredBuiltDependencies": [
+			"lefthook"
+		]
+	}
 }

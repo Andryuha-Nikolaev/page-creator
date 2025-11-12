@@ -22,7 +22,7 @@ pre-merge-commit:
 
           - &frontend_eslint_job
             name: eslint
-            run: 'pnpm eslint ./src && eslint ./app'
+            run: 'pnpm eslint ./src'
             glob: '*.{js,ts,jsx,tsx,svelte}'
             only: *only_develop_branch
 
