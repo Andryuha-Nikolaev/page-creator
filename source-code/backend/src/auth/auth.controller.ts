@@ -48,7 +48,7 @@ export class AuthController {
   ) {
     const refreshTokenFromCookies = req.cookies[
       this.authService.REFRESH_TOKEN_NAME
-    ] as string;
+    ] as unknown;
 
     if (!refreshTokenFromCookies) {
       this.authService.removeRefreshTokenFromResponse(res);
@@ -56,7 +56,9 @@ export class AuthController {
     }
 
     const { refreshToken, ...response } = await this.authService.getNewTokens(
-      refreshTokenFromCookies,
+      typeof refreshTokenFromCookies === 'string'
+        ? refreshTokenFromCookies
+        : '',
     );
 
     this.authService.addRefreshTokenToResponse(res, refreshToken);
