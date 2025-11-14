@@ -9,12 +9,10 @@ import { verify } from 'argon2';
 import { Response } from 'express';
 import { UserService } from 'src/user/user.service';
 import { AuthDto } from './dto/auth.dto';
+import { AUTH_CONSTANTS } from 'src/constants/auth.constants';
 
 @Injectable()
 export class AuthService {
-  EXPIRE_DAY_REFRESH_TOKEN = 1;
-  REFRESH_TOKEN_NAME = 'refreshToken';
-
   constructor(
     private jwt: JwtService,
     private userService: UserService,
@@ -94,9 +92,11 @@ export class AuthService {
 
   addRefreshTokenToResponse(res: Response, refreshToken: string) {
     const expiresIn = new Date();
-    expiresIn.setDate(expiresIn.getDate() + this.EXPIRE_DAY_REFRESH_TOKEN);
+    expiresIn.setDate(
+      expiresIn.getDate() + AUTH_CONSTANTS.EXPIRE_DAY_REFRESH_TOKEN,
+    );
 
-    res.cookie(this.REFRESH_TOKEN_NAME, refreshToken, {
+    res.cookie(AUTH_CONSTANTS.REFRESH_TOKEN_NAME, refreshToken, {
       httpOnly: true,
       domain: 'localhost',
       expires: expiresIn,
@@ -107,7 +107,7 @@ export class AuthService {
   }
 
   removeRefreshTokenFromResponse(res: Response) {
-    res.cookie(this.REFRESH_TOKEN_NAME, '', {
+    res.cookie(AUTH_CONSTANTS.REFRESH_TOKEN_NAME, '', {
       httpOnly: true,
       domain: 'localhost',
       expires: new Date(0),

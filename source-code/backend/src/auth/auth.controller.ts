@@ -12,6 +12,7 @@ import {
 import type { Request, Response } from 'express';
 import { AuthService } from './auth.service';
 import { AuthDto } from './dto/auth.dto';
+import { AUTH_CONSTANTS } from 'src/constants/auth.constants';
 
 @Controller('auth')
 export class AuthController {
@@ -47,7 +48,7 @@ export class AuthController {
     @Res({ passthrough: true }) res: Response,
   ) {
     const refreshTokenFromCookies = req.cookies[
-      this.authService.REFRESH_TOKEN_NAME
+      AUTH_CONSTANTS.REFRESH_TOKEN_NAME
     ] as unknown;
 
     if (!refreshTokenFromCookies) {
