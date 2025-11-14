@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { hash } from 'argon2';
 import { AuthDto } from 'src/auth/dto/auth.dto';
 import { UserDto } from './user.dto';
@@ -28,8 +28,8 @@ export class UserService {
   async getProfile(id: string) {
     const profile = await this.getById(id);
 
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-expect-error
+    if (!profile) throw new UnauthorizedException('User not found');
+
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { password, ...rest } = profile;
 
