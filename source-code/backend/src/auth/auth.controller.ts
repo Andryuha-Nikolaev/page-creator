@@ -2,7 +2,6 @@ import {
   Body,
   Controller,
   HttpCode,
-  HttpStatus,
   Post,
   Req,
   Res,
@@ -14,7 +13,7 @@ import type { Request, Response } from 'express';
 import { AuthService } from './auth.service';
 import { AuthDto } from './dto/auth.dto';
 import { AUTH_CONSTANTS } from 'src/common/constants/auth.constants';
-import { ApiResponse } from '@nestjs/swagger';
+import { ApiOkResponse } from '@nestjs/swagger';
 import {
   ApiErrorCommonResponses,
   ApiUnprocessableEntityResponse,
@@ -30,7 +29,7 @@ export class AuthController {
   @UsePipes(new ValidationPipe())
   @HttpCode(200)
   @Post('login')
-  @ApiResponse({ status: HttpStatus.OK, type: UserResponse })
+  @ApiOkResponse({ type: UserResponse })
   @ApiErrorCommonResponses()
   @ApiUnprocessableEntityResponse()
   async login(
@@ -48,7 +47,7 @@ export class AuthController {
   @UsePipes(new ValidationPipe())
   @HttpCode(200)
   @Post('register')
-  @ApiResponse({ status: HttpStatus.OK, type: UserResponse })
+  @ApiOkResponse({ type: UserResponse })
   @ApiErrorCommonResponses()
   @ApiBadRequestResponse()
   @ApiUnauthorizedResponse()
@@ -67,7 +66,7 @@ export class AuthController {
 
   @HttpCode(200)
   @Post('login/access-token')
-  @ApiResponse({ status: HttpStatus.OK, type: UserResponse })
+  @ApiOkResponse({ type: UserResponse })
   @ApiErrorCommonResponses()
   @ApiUnauthorizedResponse()
   async getNewTokens(
@@ -99,7 +98,7 @@ export class AuthController {
 
   @HttpCode(200)
   @Post('logout')
-  @ApiResponse({ status: HttpStatus.OK, type: Boolean })
+  @ApiOkResponse({ type: Boolean })
   @ApiErrorCommonResponses()
   logout(@Res({ passthrough: true }) res: Response) {
     this.authService.removeAccessTokenFromResponse(res);

@@ -3,7 +3,6 @@ import {
   Controller,
   Get,
   HttpCode,
-  HttpStatus,
   Put,
   UsePipes,
   ValidationPipe,
@@ -12,7 +11,7 @@ import { Auth } from 'src/auth/decorators/auth.decorator';
 import { CurrentUser } from 'src/auth/decorators/user.decorator';
 import { UserDto } from './user.dto';
 import { UserService } from './user.service';
-import { ApiResponse } from '@nestjs/swagger';
+import { ApiOkResponse } from '@nestjs/swagger';
 import {
   ApiErrorCommonResponses,
   ApiUnauthorizedResponse,
@@ -26,7 +25,7 @@ export class UserController {
 
   @Get()
   @Auth()
-  @ApiResponse({ type: UserResponse })
+  @ApiOkResponse({ type: UserResponse })
   @ApiErrorCommonResponses()
   @ApiUnauthorizedResponse()
   async profile(@CurrentUser('id') id: string): Promise<UserResponse> {
@@ -37,7 +36,7 @@ export class UserController {
   @HttpCode(200)
   @Put()
   @Auth()
-  @ApiResponse({ status: HttpStatus.OK, type: UserUpdateResponse })
+  @ApiOkResponse({ type: UserUpdateResponse })
   @ApiErrorCommonResponses()
   @ApiUnauthorizedResponse()
   @ApiUnprocessableEntityResponse()
