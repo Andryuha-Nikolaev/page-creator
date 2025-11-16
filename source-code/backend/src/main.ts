@@ -1,7 +1,11 @@
 import { NestFactory } from '@nestjs/core';
 
 import cookieParser from 'cookie-parser';
-import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
+import {
+  SwaggerModule,
+  DocumentBuilder,
+  SwaggerCustomOptions,
+} from '@nestjs/swagger';
 import { AppModule } from './app.module';
 
 async function bootstrap() {
@@ -16,13 +20,17 @@ async function bootstrap() {
   });
 
   const config = new DocumentBuilder()
-    .setTitle('Cats example')
-    .setDescription('The cats API description')
+    .setTitle('PageCreator OpenApi')
+    .setDescription('API description')
     .setVersion('1.0')
-    .addTag('cats')
     .build();
-  const documentFactory = () => SwaggerModule.createDocument(app, config);
-  SwaggerModule.setup('api', app, documentFactory);
+  const options: SwaggerCustomOptions = {
+    raw: ['yaml'],
+  };
+  const documentFactory = () => SwaggerModule.createDocument(app, config, {});
+  SwaggerModule.setup('open-api', app, documentFactory, {
+    swaggerOptions: options,
+  });
 
   await app.listen(process.env.PORT ?? 4200);
 }
