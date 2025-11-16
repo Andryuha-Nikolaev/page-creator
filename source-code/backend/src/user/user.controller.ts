@@ -9,14 +9,16 @@ import {
 } from '@nestjs/common';
 import { Auth } from 'src/auth/decorators/auth.decorator';
 import { CurrentUser } from 'src/auth/decorators/user.decorator';
-import { UserDto } from './user.dto';
+import { UserDto, UserResponseDto, UserUpdateResponseDto } from './user.dto';
 import { UserService } from './user.service';
+import { ApiResponse } from '@nestjs/swagger';
 
 @Controller('user/profile')
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
   @Get()
+  @ApiResponse({ type: UserResponseDto })
   @Auth()
   async profile(@CurrentUser('id') id: string) {
     return this.userService.getProfile(id);
@@ -25,6 +27,7 @@ export class UserController {
   @UsePipes(new ValidationPipe())
   @HttpCode(200)
   @Put()
+  @ApiResponse({ type: UserUpdateResponseDto })
   @Auth()
   async updateProfile(@CurrentUser('id') id: string, @Body() dto: UserDto) {
     return this.userService.update(id, dto);

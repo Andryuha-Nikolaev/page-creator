@@ -36,6 +36,7 @@ export class AuthController {
   @UsePipes(new ValidationPipe())
   @HttpCode(200)
   @Post('register')
+  @ApiResponse({ type: UserResponseDto })
   async register(
     @Body() dto: AuthDto,
     @Res({ passthrough: true }) res: Response,
@@ -50,6 +51,7 @@ export class AuthController {
 
   @HttpCode(200)
   @Post('login/access-token')
+  @ApiResponse({ type: UserResponseDto })
   async getNewTokens(
     @Req() req: Request,
     @Res({ passthrough: true }) res: Response,
@@ -79,6 +81,7 @@ export class AuthController {
 
   @HttpCode(200)
   @Post('logout')
+  @ApiResponse({ type: Boolean })
   logout(@Res({ passthrough: true }) res: Response) {
     this.authService.removeAccessTokenFromResponse(res);
     this.authService.removeRefreshTokenFromResponse(res);

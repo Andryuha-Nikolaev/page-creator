@@ -5,10 +5,12 @@ import { User } from 'src/_gen/prisma-class/user';
 export class UserDto {
   @IsEmail()
   @IsOptional()
+  @ApiProperty()
   email?: string;
 
   @IsString()
   @IsOptional()
+  @ApiProperty()
   name?: string;
 
   @IsOptional()
@@ -16,6 +18,7 @@ export class UserDto {
     message: 'Password must be at least 6 characters long',
   })
   @IsString()
+  @ApiProperty()
   password?: string;
 }
 
@@ -25,3 +28,10 @@ export class UserResponseDto {
   @ApiProperty({ type: UserWithoutPassword })
   user: UserWithoutPassword;
 }
+
+export class UserUpdateResponseDto extends OmitType(User, [
+  'password',
+  'id',
+  'createdAt',
+  'updatedAt',
+]) {}
