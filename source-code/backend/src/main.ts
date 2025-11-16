@@ -1,8 +1,20 @@
 import { NestFactory } from '@nestjs/core';
+
+import cookieParser from 'cookie-parser';
 import { AppModule } from './app.module';
+import { env } from 'prisma/config';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-  await app.listen(process.env.PORT ?? 3000);
+  app.setGlobalPrefix('api');
+  app.use(cookieParser());
+  app.enableCors({
+    // TODO: configure origin
+    origin: ['http://localhost:3000'],
+    credentials: true,
+    exposedHeaders: 'set-cookie',
+  });
+
+  await app.listen(env('PORT') ?? 4200);
 }
-bootstrap();
+void bootstrap();
