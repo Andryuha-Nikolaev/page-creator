@@ -9,7 +9,10 @@ import { verify } from 'argon2';
 import { Response } from 'express';
 import { UserService } from 'src/user/user.service';
 import { AuthDto } from './dto/auth.dto';
-import { AUTH_CONSTANTS } from 'src/constants/auth.constants';
+import {
+  AUTH_CONSTANTS,
+  JWT_SIGN_CONSTANTS,
+} from 'src/constants/auth.constants';
 
 @Injectable()
 export class AuthService {
@@ -68,11 +71,11 @@ export class AuthService {
     const data = { id: userId };
 
     const accessToken = this.jwt.sign(data, {
-      expiresIn: '1h',
+      expiresIn: JWT_SIGN_CONSTANTS.EXPIRE_JWT_SIGN_ACCESS_TOKEN,
     });
 
     const refreshToken = this.jwt.sign(data, {
-      expiresIn: '7d',
+      expiresIn: JWT_SIGN_CONSTANTS.EXPIRE_JWT_SIGN_REFRESH_TOKEN,
     });
 
     return { accessToken, refreshToken };
@@ -98,10 +101,11 @@ export class AuthService {
 
     res.cookie(AUTH_CONSTANTS.REFRESH_TOKEN_NAME, refreshToken, {
       httpOnly: true,
+      // TODO: configure domain
       domain: 'localhost',
       expires: expiresIn,
       secure: true,
-      // lax if production
+      // TODO: lax if production
       sameSite: 'none',
     });
   }
@@ -109,10 +113,11 @@ export class AuthService {
   removeRefreshTokenFromResponse(res: Response) {
     res.cookie(AUTH_CONSTANTS.REFRESH_TOKEN_NAME, '', {
       httpOnly: true,
+      // TODO: configure domain
       domain: 'localhost',
       expires: new Date(0),
       secure: true,
-      // lax if production
+      // TODO: lax if production
       sameSite: 'none',
     });
   }
