@@ -1,16 +1,16 @@
-import { ApiProperty, OmitType } from '@nestjs/swagger';
+import { ApiProperty, ApiPropertyOptional, OmitType } from '@nestjs/swagger';
 import { IsEmail, IsOptional, IsString, MinLength } from 'class-validator';
 import { User } from 'src/_gen/prisma-class/user';
 
 export class UserDto {
   @IsEmail()
   @IsOptional()
-  @ApiProperty()
+  @ApiPropertyOptional()
   email?: string;
 
   @IsString()
   @IsOptional()
-  @ApiProperty()
+  @ApiPropertyOptional()
   name?: string;
 
   @IsOptional()
@@ -18,7 +18,7 @@ export class UserDto {
     message: 'Password must be at least 6 characters long',
   })
   @IsString()
-  @ApiProperty()
+  @ApiPropertyOptional()
   password?: string;
 }
 
