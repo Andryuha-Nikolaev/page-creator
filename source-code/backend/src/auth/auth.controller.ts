@@ -15,13 +15,13 @@ import { AuthService } from './auth.service';
 import { AuthDto } from './dto/auth.dto';
 import { AUTH_CONSTANTS } from 'src/common/constants/auth.constants';
 import { ApiResponse } from '@nestjs/swagger';
-import { UserResponseDto } from 'src/user/user.dto';
 import {
   ApiErrorCommonResponses,
   ApiUnprocessableEntityResponse,
   ApiUnauthorizedResponse,
   ApiBadRequestResponse,
 } from 'src/common/decorators/error-response.decorator';
+import { UserResponse } from 'src/user/user.entity';
 
 @Controller('auth')
 export class AuthController {
@@ -30,10 +30,13 @@ export class AuthController {
   @UsePipes(new ValidationPipe())
   @HttpCode(200)
   @Post('login')
-  @ApiResponse({ status: HttpStatus.OK, type: UserResponseDto })
+  @ApiResponse({ status: HttpStatus.OK, type: UserResponse })
   @ApiErrorCommonResponses()
   @ApiUnprocessableEntityResponse()
-  async login(@Body() dto: AuthDto, @Res({ passthrough: true }) res: Response) {
+  async login(
+    @Body() dto: AuthDto,
+    @Res({ passthrough: true }) res: Response,
+  ): Promise<UserResponse> {
     const { accessToken, refreshToken, ...response } =
       await this.authService.login(dto);
     this.authService.addAccessTokenToResponse(res, accessToken);
@@ -45,7 +48,7 @@ export class AuthController {
   @UsePipes(new ValidationPipe())
   @HttpCode(200)
   @Post('register')
-  @ApiResponse({ status: HttpStatus.OK, type: UserResponseDto })
+  @ApiResponse({ status: HttpStatus.OK, type: UserResponse })
   @ApiErrorCommonResponses()
   @ApiBadRequestResponse()
   @ApiUnauthorizedResponse()
@@ -53,7 +56,7 @@ export class AuthController {
   async register(
     @Body() dto: AuthDto,
     @Res({ passthrough: true }) res: Response,
-  ) {
+  ): Promise<UserResponse> {
     const { accessToken, refreshToken, ...response } =
       await this.authService.register(dto);
     this.authService.addAccessTokenToResponse(res, accessToken);
@@ -64,13 +67,13 @@ export class AuthController {
 
   @HttpCode(200)
   @Post('login/access-token')
-  @ApiResponse({ status: HttpStatus.OK, type: UserResponseDto })
+  @ApiResponse({ status: HttpStatus.OK, type: UserResponse })
   @ApiErrorCommonResponses()
   @ApiUnauthorizedResponse()
   async getNewTokens(
     @Req() req: Request,
     @Res({ passthrough: true }) res: Response,
-  ) {
+  ): Promise<UserResponse> {
     const refreshTokenFromCookies = req.cookies[
       AUTH_CONSTANTS.REFRESH_TOKEN_NAME
     ] as unknown;

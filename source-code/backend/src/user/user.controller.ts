@@ -10,7 +10,7 @@ import {
 } from '@nestjs/common';
 import { Auth } from 'src/auth/decorators/auth.decorator';
 import { CurrentUser } from 'src/auth/decorators/user.decorator';
-import { UserDto, UserResponseDto, UserUpdateResponseDto } from './user.dto';
+import { UserDto } from './user.dto';
 import { UserService } from './user.service';
 import { ApiResponse } from '@nestjs/swagger';
 import {
@@ -18,6 +18,7 @@ import {
   ApiUnauthorizedResponse,
   ApiUnprocessableEntityResponse,
 } from 'src/common/decorators/error-response.decorator';
+import { UserResponse, UserUpdateResponse } from './user.entity';
 
 @Controller('user/profile')
 export class UserController {
@@ -25,10 +26,10 @@ export class UserController {
 
   @Get()
   @Auth()
-  @ApiResponse({ type: UserResponseDto })
+  @ApiResponse({ type: UserResponse })
   @ApiErrorCommonResponses()
   @ApiUnauthorizedResponse()
-  async profile(@CurrentUser('id') id: string) {
+  async profile(@CurrentUser('id') id: string): Promise<UserResponse> {
     return this.userService.getProfile(id);
   }
 
@@ -36,11 +37,14 @@ export class UserController {
   @HttpCode(200)
   @Put()
   @Auth()
-  @ApiResponse({ status: HttpStatus.OK, type: UserUpdateResponseDto })
+  @ApiResponse({ status: HttpStatus.OK, type: UserUpdateResponse })
   @ApiErrorCommonResponses()
   @ApiUnauthorizedResponse()
   @ApiUnprocessableEntityResponse()
-  async updateProfile(@CurrentUser('id') id: string, @Body() dto: UserDto) {
+  async updateProfile(
+    @CurrentUser('id') id: string,
+    @Body() dto: UserDto,
+  ): Promise<UserUpdateResponse> {
     return this.userService.update(id, dto);
   }
 }
