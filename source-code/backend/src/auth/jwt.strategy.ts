@@ -4,7 +4,6 @@ import { Strategy, ExtractJwt } from 'passport-jwt';
 import { Request } from 'express';
 import { UserService } from '../user/user.service';
 import { AUTH_CONSTANTS } from 'src/constants/auth.constants';
-import { env } from 'prisma/config';
 
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {
@@ -27,7 +26,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
         },
       ]),
       ignoreExpiration: false,
-      secretOrKey: env('JWT_SECRET'),
+      secretOrKey: process.env.JWT_SECRET,
     });
   }
 
