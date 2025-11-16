@@ -13,6 +13,8 @@ import type { Request, Response } from 'express';
 import { AuthService } from './auth.service';
 import { AuthDto } from './dto/auth.dto';
 import { AUTH_CONSTANTS } from 'src/constants/auth.constants';
+import { ApiResponse } from '@nestjs/swagger';
+import { UserResponseDto } from 'src/user/user.dto';
 
 @Controller('auth')
 export class AuthController {
@@ -21,6 +23,7 @@ export class AuthController {
   @UsePipes(new ValidationPipe())
   @HttpCode(200)
   @Post('login')
+  @ApiResponse({ type: UserResponseDto })
   async login(@Body() dto: AuthDto, @Res({ passthrough: true }) res: Response) {
     const { accessToken, refreshToken, ...response } =
       await this.authService.login(dto);
