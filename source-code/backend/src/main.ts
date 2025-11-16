@@ -2,6 +2,7 @@ import { NestFactory } from '@nestjs/core';
 
 import cookieParser from 'cookie-parser';
 import { AppModule } from './app.module';
+import { env } from 'prisma/config';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -14,6 +15,6 @@ async function bootstrap() {
     exposedHeaders: 'set-cookie',
   });
 
-  await app.listen(process.env.PORT ?? 4200);
+  await app.listen(env('PORT') ?? 4200);
 }
 void bootstrap();
