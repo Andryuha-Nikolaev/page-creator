@@ -21,7 +21,7 @@ import {
   ApiUnprocessableEntityResponse,
   ApiUnauthorizedResponse,
   ApiBadRequestResponse,
-} from 'src/common/decorators/api-responses.decorator';
+} from 'src/common/decorators/error-response.decorator';
 
 @Controller('auth')
 export class AuthController {

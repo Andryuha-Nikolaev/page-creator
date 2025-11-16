@@ -17,7 +17,7 @@ import {
   ApiErrorCommonResponses,
   ApiUnauthorizedResponse,
   ApiUnprocessableEntityResponse,
-} from 'src/common/decorators/api-responses.decorator';
+} from 'src/common/decorators/error-response.decorator';
 
 @Controller('user/profile')
 export class UserController {
