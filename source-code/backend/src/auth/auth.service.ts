@@ -12,7 +12,7 @@ import { AuthDto } from './dto/auth.dto';
 import {
   AUTH_CONSTANTS,
   JWT_SIGN_CONSTANTS,
-} from 'src/constants/auth.constants';
+} from 'src/common/constants/auth.constants';
 
 @Injectable()
 export class AuthService {

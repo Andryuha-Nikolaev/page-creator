@@ -3,6 +3,7 @@ import {
   Controller,
   Get,
   HttpCode,
+  HttpStatus,
   Put,
   UsePipes,
   ValidationPipe,
@@ -12,14 +13,21 @@ import { CurrentUser } from 'src/auth/decorators/user.decorator';
 import { UserDto, UserResponseDto, UserUpdateResponseDto } from './user.dto';
 import { UserService } from './user.service';
 import { ApiResponse } from '@nestjs/swagger';
+import {
+  ApiErrorCommonResponses,
+  ApiUnauthorizedResponse,
+  ApiUnprocessableEntityResponse,
+} from 'src/common/decorators/api-responses.decorator';
 
 @Controller('user/profile')
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
   @Get()
-  @ApiResponse({ type: UserResponseDto })
   @Auth()
+  @ApiResponse({ type: UserResponseDto })
+  @ApiErrorCommonResponses()
+  @ApiUnauthorizedResponse()
   async profile(@CurrentUser('id') id: string) {
     return this.userService.getProfile(id);
   }
@@ -27,8 +35,11 @@ export class UserController {
   @UsePipes(new ValidationPipe())
   @HttpCode(200)
   @Put()
-  @ApiResponse({ type: UserUpdateResponseDto })
   @Auth()
+  @ApiResponse({ status: HttpStatus.OK, type: UserUpdateResponseDto })
+  @ApiErrorCommonResponses()
+  @ApiUnauthorizedResponse()
+  @ApiUnprocessableEntityResponse()
   async updateProfile(@CurrentUser('id') id: string, @Body() dto: UserDto) {
     return this.userService.update(id, dto);
   }
