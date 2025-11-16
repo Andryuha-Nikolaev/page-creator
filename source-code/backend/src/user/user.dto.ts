@@ -1,5 +1,6 @@
-import { ApiProperty } from '@nestjs/swagger';
+import { ApiProperty, OmitType } from '@nestjs/swagger';
 import { IsEmail, IsOptional, IsString, MinLength } from 'class-validator';
+import { User } from 'src/_gen/prisma-class/user';
 
 export class UserDto {
   @IsEmail()
@@ -20,3 +21,17 @@ export class UserDto {
   @ApiProperty()
   password?: string;
 }
+
+class UserWithoutPassword extends OmitType(User, ['password']) {}
+
+export class UserResponseDto {
+  @ApiProperty({ type: UserWithoutPassword })
+  user: UserWithoutPassword;
+}
+
+export class UserUpdateResponseDto extends OmitType(User, [
+  'password',
+  'id',
+  'createdAt',
+  'updatedAt',
+]) {}
