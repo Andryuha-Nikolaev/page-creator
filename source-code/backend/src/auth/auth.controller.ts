@@ -22,7 +22,9 @@ export class AuthController {
   @HttpCode(200)
   @Post('login')
   async login(@Body() dto: AuthDto, @Res({ passthrough: true }) res: Response) {
-    const { refreshToken, ...response } = await this.authService.login(dto);
+    const { accessToken, refreshToken, ...response } =
+      await this.authService.login(dto);
+    this.authService.addAccessTokenToResponse(res, accessToken);
     this.authService.addRefreshTokenToResponse(res, refreshToken);
 
     return response;
@@ -35,7 +37,9 @@ export class AuthController {
     @Body() dto: AuthDto,
     @Res({ passthrough: true }) res: Response,
   ) {
-    const { refreshToken, ...response } = await this.authService.register(dto);
+    const { accessToken, refreshToken, ...response } =
+      await this.authService.register(dto);
+    this.authService.addAccessTokenToResponse(res, accessToken);
     this.authService.addRefreshTokenToResponse(res, refreshToken);
 
     return response;
@@ -52,16 +56,19 @@ export class AuthController {
     ] as unknown;
 
     if (!refreshTokenFromCookies) {
+      this.authService.removeAccessTokenFromResponse(res);
       this.authService.removeRefreshTokenFromResponse(res);
       throw new UnauthorizedException('Refresh token not passed');
     }
 
-    const { refreshToken, ...response } = await this.authService.getNewTokens(
-      typeof refreshTokenFromCookies === 'string'
-        ? refreshTokenFromCookies
-        : '',
-    );
+    const { accessToken, refreshToken, ...response } =
+      await this.authService.getNewTokens(
+        typeof refreshTokenFromCookies === 'string'
+          ? refreshTokenFromCookies
+          : '',
+      );
 
+    this.authService.addAccessTokenToResponse(res, accessToken);
     this.authService.addRefreshTokenToResponse(res, refreshToken);
 
     return response;
@@ -70,6 +77,7 @@ export class AuthController {
   @HttpCode(200)
   @Post('logout')
   logout(@Res({ passthrough: true }) res: Response) {
+    this.authService.removeAccessTokenFromResponse(res);
     this.authService.removeRefreshTokenFromResponse(res);
     return true;
   }

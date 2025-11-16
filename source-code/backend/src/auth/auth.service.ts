@@ -93,6 +93,23 @@ export class AuthService {
     return user;
   }
 
+  addAccessTokenToResponse(res: Response, accessToken: string) {
+    const expiresIn = new Date();
+    expiresIn.setHours(
+      expiresIn.getHours() + AUTH_CONSTANTS.EXPIRE_HOUR_ACCESS_TOKEN,
+    );
+
+    res.cookie(AUTH_CONSTANTS.ACCESS_TOKEN_NAME, accessToken, {
+      httpOnly: true,
+      // TODO: configure domain
+      domain: 'localhost',
+      expires: expiresIn,
+      secure: true,
+      // TODO: lax if production
+      sameSite: 'none',
+    });
+  }
+
   addRefreshTokenToResponse(res: Response, refreshToken: string) {
     const expiresIn = new Date();
     expiresIn.setDate(
@@ -104,6 +121,18 @@ export class AuthService {
       // TODO: configure domain
       domain: 'localhost',
       expires: expiresIn,
+      secure: true,
+      // TODO: lax if production
+      sameSite: 'none',
+    });
+  }
+
+  removeAccessTokenFromResponse(res: Response) {
+    res.cookie(AUTH_CONSTANTS.ACCESS_TOKEN_NAME, '', {
+      httpOnly: true,
+      // TODO: configure domain
+      domain: 'localhost',
+      expires: new Date(0),
       secure: true,
       // TODO: lax if production
       sameSite: 'none',
