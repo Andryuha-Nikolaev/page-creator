@@ -2,18 +2,7 @@ import { Database, Resource, getModelByName } from '@adminjs/prisma';
 import AdminJS, { ResourceWithOptions } from 'adminjs';
 import { PrismaService } from 'src/prisma.service';
 import { dark } from '@adminjs/themes';
-
-const DEFAULT_ADMIN = {
-  email: process.env.ADMIN_EMAIL,
-  password: process.env.ADMIN_PASSWORD,
-};
-
-const authenticate = async (email: string, password: string) => {
-  if (email === DEFAULT_ADMIN.email && password === DEFAULT_ADMIN.password) {
-    return Promise.resolve(DEFAULT_ADMIN);
-  }
-  return null;
-};
+import { authenticate } from './decorators/auth.decorator';
 
 AdminJS.registerAdapter({ Database, Resource });
 
