@@ -1,6 +1,7 @@
 import { Database, Resource, getModelByName } from '@adminjs/prisma';
 import AdminJS, { ResourceWithOptions } from 'adminjs';
 import { PrismaService } from 'src/prisma.service';
+import { dark } from '@adminjs/themes';
 
 AdminJS.registerAdapter({ Database, Resource });
 
@@ -35,6 +36,8 @@ export default import('@adminjs/nestjs').then(({ AdminModule }) =>
               },
             },
           ] as Array<ResourceWithOptions>,
+          defaultTheme: dark.id,
+          availableThemes: [dark],
         },
       };
     },
