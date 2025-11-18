@@ -7,9 +7,10 @@ import { ConfigModule } from '@nestjs/config';
 import { AuthModule } from './auth/auth.module';
 import { UserModule } from './user/user.module';
 import { APP_PIPE } from '@nestjs/core';
+import AdminModule from './admin/admin.module';
 
 @Module({
-  imports: [ConfigModule.forRoot(), UserModule, AuthModule],
+  imports: [ConfigModule.forRoot(), UserModule, AuthModule, AdminModule],
   providers: [
     {
       provide: APP_PIPE,
