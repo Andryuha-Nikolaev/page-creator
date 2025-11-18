@@ -3,14 +3,14 @@ import { NestFactory } from '@nestjs/core';
 import cookieParser from 'cookie-parser';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { AppModule } from './app.module';
+import { corsOrigin } from './config/cors-origin.config';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   app.setGlobalPrefix('api');
   app.use(cookieParser());
   app.enableCors({
-    // TODO: configure origin
-    origin: ['http://localhost:3000'],
+    origin: corsOrigin,
     credentials: true,
     exposedHeaders: 'set-cookie',
   });

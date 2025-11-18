@@ -1,4 +1,5 @@
 import { JwtSignOptions } from '@nestjs/jwt';
+import { CookieOptions } from 'express';
 
 export const AUTH_CONSTANTS = {
   EXPIRE_DAY_REFRESH_TOKEN: 7,
@@ -14,4 +15,10 @@ export const JWT_SIGN_CONSTANTS: {
 } = {
   EXPIRE_JWT_SIGN_REFRESH_TOKEN: '7d',
   EXPIRE_JWT_SIGN_ACCESS_TOKEN: '1h',
+};
+
+export const COOKIE_OPTIONS: CookieOptions = {
+  httpOnly: true,
+  secure: true,
+  sameSite: 'none',
 };

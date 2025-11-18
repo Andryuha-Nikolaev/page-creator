@@ -1,3 +1,4 @@
+import { COOKIE_OPTIONS } from './../common/constants/auth.constants';
 import {
   BadRequestException,
   Injectable,
@@ -100,13 +101,8 @@ export class AuthService {
     );
 
     res.cookie(AUTH_CONSTANTS.ACCESS_TOKEN_NAME, accessToken, {
-      httpOnly: true,
-      // TODO: configure domain
-      domain: 'localhost',
       expires: expiresIn,
-      secure: true,
-      // TODO: lax if production
-      sameSite: 'none',
+      ...COOKIE_OPTIONS,
     });
   }
 
@@ -117,37 +113,22 @@ export class AuthService {
     );
 
     res.cookie(AUTH_CONSTANTS.REFRESH_TOKEN_NAME, refreshToken, {
-      httpOnly: true,
-      // TODO: configure domain
-      domain: 'localhost',
       expires: expiresIn,
-      secure: true,
-      // TODO: lax if production
-      sameSite: 'none',
+      ...COOKIE_OPTIONS,
     });
   }
 
   removeAccessTokenFromResponse(res: Response) {
     res.cookie(AUTH_CONSTANTS.ACCESS_TOKEN_NAME, '', {
-      httpOnly: true,
-      // TODO: configure domain
-      domain: 'localhost',
       expires: new Date(0),
-      secure: true,
-      // TODO: lax if production
-      sameSite: 'none',
+      ...COOKIE_OPTIONS,
     });
   }
 
   removeRefreshTokenFromResponse(res: Response) {
     res.cookie(AUTH_CONSTANTS.REFRESH_TOKEN_NAME, '', {
-      httpOnly: true,
-      // TODO: configure domain
-      domain: 'localhost',
       expires: new Date(0),
-      secure: true,
-      // TODO: lax if production
-      sameSite: 'none',
+      ...COOKIE_OPTIONS,
     });
   }
 }
