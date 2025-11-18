@@ -33,11 +33,17 @@ export default import('@adminjs/nestjs').then(({ AdminModule }) =>
                     isAccessible: false,
                   },
                 },
+                navigation: {
+                  icon: 'User',
+                },
               },
             },
           ] as Array<ResourceWithOptions>,
           defaultTheme: dark.id,
           availableThemes: [dark],
+          branding: {
+            companyName: 'PageCreator Admin',
+          },
         },
       };
     },
