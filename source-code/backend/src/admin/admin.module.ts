@@ -1,5 +1,5 @@
 import { Database, Resource, getModelByName } from '@adminjs/prisma';
-import AdminJS from 'adminjs';
+import AdminJS, { ResourceWithOptions } from 'adminjs';
 import { PrismaService } from 'src/prisma.service';
 
 AdminJS.registerAdapter({ Database, Resource });
@@ -14,11 +14,27 @@ export default import('@adminjs/nestjs').then(({ AdminModule }) =>
           rootPath: '/admin',
           resources: [
             {
-              // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-              resource: { model: getModelByName('User'), client: prisma },
-              options: {},
+              resource: {
+                model: getModelByName('User') as unknown,
+                client: prisma,
+              },
+              options: {
+                properties: {
+                  password: { type: 'password', isVisible: { edit: false } },
+                  email: {
+                    props: {
+                      type: 'email',
+                    },
+                  },
+                },
+                actions: {
+                  new: {
+                    isAccessible: false,
+                  },
+                },
+              },
             },
-          ],
+          ] as Array<ResourceWithOptions>,
         },
       };
     },
