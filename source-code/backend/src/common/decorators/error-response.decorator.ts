@@ -1,5 +1,11 @@
 import { applyDecorators } from '@nestjs/common';
-import { ApiResponse } from '@nestjs/swagger';
+import {
+  ApiBadGatewayResponse,
+  ApiInternalServerErrorResponse,
+  ApiNotFoundResponse,
+  ApiUnauthorizedResponse,
+  ApiUnprocessableEntityResponse,
+} from '@nestjs/swagger';
 import {
   BadRequestErrorResponseDto,
   InternalServerErrorResponseDto,
@@ -8,59 +14,36 @@ import {
   UnprocessableEntityErrorResponseDto,
 } from '../dto/error-response.dto';
 
-export function ApiBadRequestResponse() {
-  return applyDecorators(
-    ApiResponse({
-      status: 400,
-      description: 'Bad Request',
-      type: BadRequestErrorResponseDto,
-    }),
-  );
+export function BadRequestResponse() {
+  return ApiBadGatewayResponse({
+    type: BadRequestErrorResponseDto,
+  });
 }
 
-export function ApiUnauthorizedResponse() {
-  return applyDecorators(
-    ApiResponse({
-      status: 401,
-      description: 'Unauthorized',
-      type: UnauthorizedErrorResponseDto,
-    }),
-  );
+export function UnauthorizedResponse() {
+  return ApiUnauthorizedResponse({
+    type: UnauthorizedErrorResponseDto,
+  });
 }
 
-function ApiNotFoundResponse() {
-  return applyDecorators(
-    ApiResponse({
-      status: 404,
-      description: 'Not Found',
-      type: NotFoundErrorResponseDto,
-    }),
-  );
+function NotFoundResponse() {
+  return ApiNotFoundResponse({
+    type: NotFoundErrorResponseDto,
+  });
 }
 
-export function ApiUnprocessableEntityResponse() {
-  return applyDecorators(
-    ApiResponse({
-      status: 422,
-      description: 'Unprocessable Entity',
-      type: UnprocessableEntityErrorResponseDto,
-    }),
-  );
+export function UnprocessableEntityResponse() {
+  return ApiUnprocessableEntityResponse({
+    type: UnprocessableEntityErrorResponseDto,
+  });
 }
 
-function ApiInternalServerErrorResponse() {
-  return applyDecorators(
-    ApiResponse({
-      status: 500,
-      description: 'Internal Server Error',
-      type: InternalServerErrorResponseDto,
-    }),
-  );
+function InternalServerErrorResponse() {
+  return ApiInternalServerErrorResponse({
+    type: InternalServerErrorResponseDto,
+  });
 }
 
-export function ApiErrorCommonResponses() {
-  return applyDecorators(
-    ApiNotFoundResponse(),
-    ApiInternalServerErrorResponse(),
-  );
+export function ErrorCommonResponses() {
+  return applyDecorators(NotFoundResponse(), InternalServerErrorResponse());
 }

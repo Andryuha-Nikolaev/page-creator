@@ -13,9 +13,9 @@ import { UserDto, UserResponseDto, UserUpdateResponseDto } from './user.dto';
 import { UserService } from './user.service';
 import { ApiOkResponse } from '@nestjs/swagger';
 import {
-  ApiErrorCommonResponses,
-  ApiUnauthorizedResponse,
-  ApiUnprocessableEntityResponse,
+  ErrorCommonResponses,
+  UnauthorizedResponse,
+  UnprocessableEntityResponse,
 } from 'src/common/decorators/error-response.decorator';
 
 @Controller('user/profile')
@@ -25,8 +25,8 @@ export class UserController {
   @Get()
   @Auth()
   @ApiOkResponse({ type: UserResponseDto })
-  @ApiErrorCommonResponses()
-  @ApiUnauthorizedResponse()
+  @ErrorCommonResponses()
+  @UnauthorizedResponse()
   async profile(@CurrentUser('id') id: string) {
     return this.userService.getProfile(id);
   }
@@ -36,9 +36,9 @@ export class UserController {
   @Put()
   @Auth()
   @ApiOkResponse({ type: UserUpdateResponseDto })
-  @ApiErrorCommonResponses()
-  @ApiUnauthorizedResponse()
-  @ApiUnprocessableEntityResponse()
+  @ErrorCommonResponses()
+  @UnauthorizedResponse()
+  @UnprocessableEntityResponse()
   async updateProfile(@CurrentUser('id') id: string, @Body() dto: UserDto) {
     return this.userService.update(id, dto);
   }

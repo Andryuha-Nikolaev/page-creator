@@ -16,10 +16,10 @@ import { AUTH_CONSTANTS } from 'src/common/constants/auth.constants';
 import { ApiOkResponse } from '@nestjs/swagger';
 import { UserResponseDto } from 'src/user/user.dto';
 import {
-  ApiErrorCommonResponses,
-  ApiUnprocessableEntityResponse,
-  ApiUnauthorizedResponse,
-  ApiBadRequestResponse,
+  ErrorCommonResponses,
+  UnprocessableEntityResponse,
+  UnauthorizedResponse,
+  BadRequestResponse,
 } from 'src/common/decorators/error-response.decorator';
 
 @Controller('auth')
@@ -30,8 +30,8 @@ export class AuthController {
   @HttpCode(200)
   @Post('login')
   @ApiOkResponse({ type: UserResponseDto })
-  @ApiErrorCommonResponses()
-  @ApiUnprocessableEntityResponse()
+  @ErrorCommonResponses()
+  @UnprocessableEntityResponse()
   async login(@Body() dto: AuthDto, @Res({ passthrough: true }) res: Response) {
     const { accessToken, refreshToken, ...response } =
       await this.authService.login(dto);
@@ -45,10 +45,10 @@ export class AuthController {
   @HttpCode(200)
   @Post('register')
   @ApiOkResponse({ type: UserResponseDto })
-  @ApiErrorCommonResponses()
-  @ApiBadRequestResponse()
-  @ApiUnauthorizedResponse()
-  @ApiUnprocessableEntityResponse()
+  @ErrorCommonResponses()
+  @BadRequestResponse()
+  @UnauthorizedResponse()
+  @UnprocessableEntityResponse()
   async register(
     @Body() dto: AuthDto,
     @Res({ passthrough: true }) res: Response,
@@ -64,8 +64,8 @@ export class AuthController {
   @HttpCode(200)
   @Post('login/access-token')
   @ApiOkResponse({ type: UserResponseDto })
-  @ApiErrorCommonResponses()
-  @ApiUnauthorizedResponse()
+  @ErrorCommonResponses()
+  @UnauthorizedResponse()
   async getNewTokens(
     @Req() req: Request,
     @Res({ passthrough: true }) res: Response,
@@ -96,7 +96,7 @@ export class AuthController {
   @HttpCode(200)
   @Post('logout')
   @ApiOkResponse({ type: Boolean })
-  @ApiErrorCommonResponses()
+  @ErrorCommonResponses()
   logout(@Res({ passthrough: true }) res: Response) {
     this.authService.removeAccessTokenFromResponse(res);
     this.authService.removeRefreshTokenFromResponse(res);
