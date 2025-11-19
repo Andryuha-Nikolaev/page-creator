@@ -2,7 +2,7 @@
 
 ## 🚀 Tech Stack
 
-- **Framework**: Next.js 16.0.1 (with Turbopack enabled by default)
+- **Framework**: Next.js 16 (with Turbopack enabled by default)
 - **Package Manager**: pnpm
 - **Linting**: ESLint + Feature-Sliced Design architecture validation
 - **Formatting**: Prettier
