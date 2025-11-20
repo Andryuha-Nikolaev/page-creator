@@ -24,12 +24,11 @@
 			"$entities/*": ["./src/entities/*"],
 			"$features/*": ["./src/features/*"],
 			"$widgets/*": ["./src/widgets/*"],
-			"$pages/*": ["./src/app-pages/*"],
+			"$pages/*": ["./src/views/*"],
 			"$app/*": ["./src/app/*"],
 			"$/*": ["./src/*"]
 		}
 	},
-	"types": ["next", "next/types/global", "next/image-types/global"],
 	"include": [
 		"next-env.d.ts",
 		"**/*.ts",
