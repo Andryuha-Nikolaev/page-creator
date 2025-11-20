@@ -1,0 +1,1 @@
+export { viewportConfig } from "./viewport";
