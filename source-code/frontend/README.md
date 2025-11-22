@@ -45,4 +45,7 @@ pnpm lint
 
 # Install git hooks (automatically runs on pnpm install)
 pnpm prepare
+
+# API Client Generation
+pnpm openapi-ts
 ```
