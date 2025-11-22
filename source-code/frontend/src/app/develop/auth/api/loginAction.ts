@@ -1,17 +1,18 @@
 "use server";
 
 import { login } from "$shared/api/code-gen";
+import { pickCookiesFromResponse } from "$shared/lib";
 
 export const loginAction = async () => {
 	try {
-		const res = await login({
+		const response = await login({
 			body: {
 				email: "andryuha_nikolaev@mail.ru",
 				password: "123456",
 			},
 		});
 
-		console.log(res.data);
+		await pickCookiesFromResponse(response.response);
 	} catch (error) {
 		console.error(error);
 	}

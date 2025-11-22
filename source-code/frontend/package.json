@@ -19,6 +19,7 @@
 		"react": "19.2.0",
 		"react-dom": "19.2.0",
 		"sass-embedded": "^1.93.3",
+		"set-cookie-parser": "^2.7.2",
 		"sharp": "^0.34.5"
 	},
 	"devDependencies": {
@@ -29,6 +30,7 @@
 		"@types/node": "^20",
 		"@types/react": "^19",
 		"@types/react-dom": "^19",
+		"@types/set-cookie-parser": "^2.4.10",
 		"babel-plugin-react-compiler": "1.0.0",
 		"eslint": "^9",
 		"eslint-config-next": "16.0.1",
