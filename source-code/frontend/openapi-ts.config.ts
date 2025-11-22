@@ -7,4 +7,10 @@ export default defineConfig({
 		format: "prettier",
 		lint: "eslint",
 	},
+	plugins: [
+		{
+			name: "@hey-api/client-next",
+			runtimeConfigPath: "../hey-api",
+		},
+	],
 });

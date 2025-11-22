@@ -1,15 +1,15 @@
-import { authControllerLogin } from "$shared/api/code-gen";
+import { login } from "$shared/api/code-gen";
 import { HomePage } from "$pages/home";
 
 export default async function Home() {
-	const res = await authControllerLogin({
+	const res = await login({
 		body: {
 			email: "andryuha_nikolaev@mail.ru",
-			password: "",
+			password: "123456",
 		},
 	});
 
-	console.log(res);
+	console.log(res.response.ok);
 
 	return <HomePage />;
 }
