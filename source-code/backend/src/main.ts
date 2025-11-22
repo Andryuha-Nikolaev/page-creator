@@ -1,7 +1,11 @@
 import { NestFactory } from '@nestjs/core';
 
 import cookieParser from 'cookie-parser';
-import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
+import {
+  SwaggerModule,
+  DocumentBuilder,
+  SwaggerDocumentOptions,
+} from '@nestjs/swagger';
 import { AppModule } from './app.module';
 import { corsOrigin } from './config/cors-origin.config';
 
@@ -20,7 +24,14 @@ async function bootstrap() {
     .setDescription('API description')
     .setVersion('1.0')
     .build();
-  const documentFactory = () => SwaggerModule.createDocument(app, config, {});
+
+  const options: SwaggerDocumentOptions = {
+    ignoreGlobalPrefix: true,
+    operationIdFactory: (controllerKey: string, methodKey: string) => methodKey,
+  };
+
+  const documentFactory = () =>
+    SwaggerModule.createDocument(app, config, options);
   SwaggerModule.setup('api/docs', app, documentFactory);
 
   await app.listen(process.env.PORT ?? 4200);
