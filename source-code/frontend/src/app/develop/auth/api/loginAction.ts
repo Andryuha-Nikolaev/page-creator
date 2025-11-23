@@ -3,7 +3,7 @@
 import { login } from "$shared/api/code-gen";
 import { pickCookiesFromResponse } from "$shared/lib";
 
-export const loginAction = async () => {
+export async function loginAction() {
 	try {
 		const response = await login({
 			body: {
@@ -16,4 +16,4 @@ export const loginAction = async () => {
 	} catch (error) {
 		console.error(error);
 	}
-};
+}

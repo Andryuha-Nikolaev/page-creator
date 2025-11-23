@@ -1,4 +1,4 @@
-import "server-only";
+"use server";
 
 import { cookies } from "next/headers";
 
@@ -17,4 +17,12 @@ export async function pickCookiesFromResponse(response: Response) {
 	for (const cookie of parsed) {
 		responseCookies.set(cookie as never);
 	}
+}
+
+export async function headersFromCookies(): Promise<HeadersInit> {
+	const cookiesStore = await cookies();
+
+	return {
+		cookie: cookiesStore.toString(),
+	};
 }
