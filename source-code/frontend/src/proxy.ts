@@ -1,14 +1,28 @@
 import { NextRequest, NextResponse } from "next/server";
 
+import { getNewTokens } from "$shared/api/code-gen";
 import { AUTH_CONSTANTS } from "$app/develop/auth/config/constants";
 
-export function proxy(request: NextRequest) {
+export async function proxy(request: NextRequest) {
 	const accessToken = request.cookies.get(AUTH_CONSTANTS.ACCESS_TOKEN_NAME);
 	const refreshToken = request.cookies.get(AUTH_CONSTANTS.REFRESH_TOKEN_NAME);
 
 	if (!accessToken && refreshToken) {
 		const headers = new Headers(request.headers);
 		const existingCookies = request.headers.get("cookie");
+
+		try {
+			const newTokensResponse = await getNewTokens({
+				headers: {
+					cookie: existingCookies,
+				},
+			});
+
+			console.log(newTokensResponse.response.status);
+		} catch (error) {
+			console.log(error);
+		}
+
 		headers.set(
 			"cookie",
 			`${existingCookies ? `${existingCookies};` : ""} vercel=fast; custom-cookie=value`
@@ -23,19 +37,6 @@ export function proxy(request: NextRequest) {
 
 		return response;
 	}
-
-	// Добавляем или обновляем cookie в заголовках
-
-	// Создаем новый запрос с обновленными заголовками
-
-	// console.log(modifiedRequest);
-
-	// response.cookies.set("vercel", "fast");
-	// response.cookies.set({
-	// 	name: "vercel",
-	// 	value: "fast",
-	// 	path: "/",
-	// });
 
 	return NextResponse.next();
 }
