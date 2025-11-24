@@ -27,9 +27,8 @@ export async function proxy(request: NextRequest) {
 				newTokensResponse.response.headers.get("set-cookie") ?? "";
 
 			parsed = parse(newTokensResponse.response.headers.getSetCookie());
-
-			console.log(parsed);
 		} catch (error) {
+			// TODO: redirect?
 			console.log(error);
 		}
 
