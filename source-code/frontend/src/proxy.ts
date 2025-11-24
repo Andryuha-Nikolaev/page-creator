@@ -1,5 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 
+import { parse } from "set-cookie-parser";
+
 import { getNewTokens } from "$shared/api/code-gen";
 import { AUTH_CONSTANTS } from "$app/develop/auth/config/constants";
 
@@ -11,6 +13,9 @@ export async function proxy(request: NextRequest) {
 		const headers = new Headers(request.headers);
 		const existingCookies = request.headers.get("cookie");
 
+		let refreshCookies = "";
+		let parsed: unknown[] = [];
+
 		try {
 			const newTokensResponse = await getNewTokens({
 				headers: {
@@ -18,15 +23,17 @@ export async function proxy(request: NextRequest) {
 				},
 			});
 
-			console.log(newTokensResponse.response.status);
+			refreshCookies =
+				newTokensResponse.response.headers.get("set-cookie") ?? "";
+
+			parsed = parse(newTokensResponse.response.headers.getSetCookie());
+
+			console.log(parsed);
 		} catch (error) {
 			console.log(error);
 		}
 
-		headers.set(
-			"cookie",
-			`${existingCookies ? `${existingCookies};` : ""} vercel=fast; custom-cookie=value`
-		);
+		headers.set("cookie", refreshCookies ?? "");
 		const modifiedRequest = new NextRequest(request, {
 			headers: headers,
 		});
@@ -34,6 +41,10 @@ export async function proxy(request: NextRequest) {
 		const response = NextResponse.next({
 			request: modifiedRequest,
 		});
+
+		for (const cookie of parsed) {
+			response.cookies.set(cookie as never);
+		}
 
 		return response;
 	}
