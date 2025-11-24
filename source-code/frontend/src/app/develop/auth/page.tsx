@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 import { getUser } from "./api/getUser";
 import { AuthPage } from "./AuthPage";
 
@@ -6,8 +8,9 @@ const Auth = async () => {
 
 	return (
 		<>
-			<h1>{user?.data?.user.name}</h1>
+			<h1>{user?.name}</h1>
 			<AuthPage />
+			<Link href="/develop">/develop</Link>
 		</>
 	);
 };

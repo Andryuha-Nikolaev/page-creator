@@ -13,6 +13,9 @@ const nextConfig: NextConfig = {
 		qualities: [90, 100],
 	},
 	reactCompiler: true,
+	experimental: {
+		useCache: true,
+	},
 };
 
 export default nextConfig;

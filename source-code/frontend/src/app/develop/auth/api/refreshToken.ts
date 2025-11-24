@@ -4,7 +4,7 @@ import { getNewTokens } from "$shared/api/code-gen";
 import { pickCookiesFromResponse } from "$shared/lib";
 import { headersFromCookies } from "$shared/lib/api/cookies";
 
-export async function refreshTokens() {
+export async function refreshTokensAction() {
 	try {
 		const response = await getNewTokens({
 			headers: await headersFromCookies(),
