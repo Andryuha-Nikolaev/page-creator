@@ -4,16 +4,18 @@ import { headersFromCookies } from "$shared/lib/api/cookies";
 
 export async function getUser() {
 	try {
-		const response = await profile({
+		const { data } = await profile({
 			headers: await headersFromCookies(),
 			next: {
 				tags: [REVALIDATE_TAGS.USER],
 			},
 		});
 
-		if (response.response.ok) {
-			return response.data?.user;
+		if (data) {
+			return data.user;
 		}
+
+		return null;
 	} catch (error) {
 		console.error(error);
 	}
