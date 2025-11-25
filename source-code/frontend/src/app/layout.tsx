@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import "./styles/index.scss";
 
 import { viewportConfig } from "$shared/config";
+import { getUser } from "$features/user";
 
 export const metadata: Metadata = {
 	title: "Create Next App",
@@ -11,15 +12,20 @@ export const metadata: Metadata = {
 
 export const viewport = viewportConfig;
 
-export default function RootLayout({
+export default async function RootLayout({
 	children,
 }: Readonly<{
 	children: React.ReactNode;
 }>) {
+	const user = await getUser();
+
 	return (
 		<html lang="ru">
 			<body>
-				<main>{children}</main>
+				<main>
+					<h1>{user?.name}</h1>
+					{children}
+				</main>
 			</body>
 		</html>
 	);

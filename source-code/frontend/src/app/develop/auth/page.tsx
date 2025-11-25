@@ -1,9 +1,10 @@
 import Link from "next/link";
 
-import { getUser } from "./api/getUser";
+import { getUser } from "$features/user";
+
 import { AuthPage } from "./AuthPage";
 
-const Auth = async () => {
+export default async function Auth() {
 	const user = await getUser();
 
 	return (
@@ -13,6 +14,4 @@ const Auth = async () => {
 			<Link href="/develop">/develop</Link>
 		</>
 	);
-};
-
-export default Auth;
+}

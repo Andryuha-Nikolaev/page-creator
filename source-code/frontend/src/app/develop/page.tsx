@@ -1,8 +1,8 @@
 import Link from "next/link";
 
-import { getUser } from "./auth/api/getUser";
+import { getUser } from "$features/user";
 
-const Develop = async () => {
+export default async function Develop() {
 	const user = await getUser();
 
 	return (
@@ -12,6 +12,4 @@ const Develop = async () => {
 			<Link href="/develop/auth">/develop/auth</Link>
 		</>
 	);
-};
-
-export default Develop;
+}

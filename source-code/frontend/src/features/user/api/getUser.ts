@@ -2,9 +2,19 @@ import { profile } from "$shared/api/code-gen";
 import { REVALIDATE_TAGS } from "$shared/config";
 import { headersFromCookies } from "$shared/lib/api/cookies";
 
+import { isUserMaybeAuthorized } from "../lib/checks";
+
 export async function getUser() {
+	console.log("get user");
+
+	const isMaybeAuthorized = await isUserMaybeAuthorized();
+
+	if (!isMaybeAuthorized) {
+		return null;
+	}
+
 	try {
-		const { data } = await profile({
+		const { data, response } = await profile({
 			headers: await headersFromCookies(),
 			next: {
 				tags: [REVALIDATE_TAGS.USER],
@@ -15,8 +25,13 @@ export async function getUser() {
 			return data.user;
 		}
 
-		return null;
+		if (response.status === 401) {
+			return null;
+		}
+
+		throw new Error(`Get user error: ${response.status}`);
 	} catch (error) {
 		console.error(error);
+		throw error;
 	}
 }
