@@ -1,4 +1,4 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse, type NextRequest } from "next/server";
 
 import { parse } from "set-cookie-parser";
 
@@ -10,30 +10,16 @@ export async function proxy(request: NextRequest) {
 	const refreshToken = request.cookies.get(AUTH_CONSTANTS.REFRESH_TOKEN_NAME);
 
 	if (!accessToken && refreshToken) {
-		const headers = new Headers(request.headers);
-		const existingCookies = request.headers.get("cookie");
-
 		try {
 			const { response: newTokensResponse } = await getNewTokens({
 				headers: {
-					cookie: existingCookies,
+					cookie: `${refreshToken.name}=${refreshToken.value};`,
 				},
 			});
 
 			if (newTokensResponse.ok) {
-				const refreshCookies =
-					newTokensResponse.headers.get("set-cookie") ?? "";
-
 				const parsed = parse(newTokensResponse.headers.getSetCookie());
-
-				headers.set("cookie", refreshCookies ?? "");
-				const modifiedRequest = new NextRequest(request, {
-					headers: headers,
-				});
-
-				const response = NextResponse.next({
-					request: modifiedRequest,
-				});
+				const response = NextResponse.next();
 
 				for (const cookie of parsed) {
 					response.cookies.set(cookie as never);
