@@ -13,39 +13,37 @@ export async function proxy(request: NextRequest) {
 		const headers = new Headers(request.headers);
 		const existingCookies = request.headers.get("cookie");
 
-		let refreshCookies = "";
-		let parsed: unknown[] = [];
-
 		try {
-			const newTokensResponse = await getNewTokens({
+			const { response: newTokensResponse } = await getNewTokens({
 				headers: {
 					cookie: existingCookies,
 				},
 			});
 
-			refreshCookies =
-				newTokensResponse.response.headers.get("set-cookie") ?? "";
+			if (newTokensResponse.ok) {
+				const refreshCookies =
+					newTokensResponse.headers.get("set-cookie") ?? "";
 
-			parsed = parse(newTokensResponse.response.headers.getSetCookie());
+				const parsed = parse(newTokensResponse.headers.getSetCookie());
+
+				headers.set("cookie", refreshCookies ?? "");
+				const modifiedRequest = new NextRequest(request, {
+					headers: headers,
+				});
+
+				const response = NextResponse.next({
+					request: modifiedRequest,
+				});
+
+				for (const cookie of parsed) {
+					response.cookies.set(cookie as never);
+				}
+
+				return response;
+			}
 		} catch (error) {
-			// TODO: redirect?
-			console.log(error);
+			console.error(error);
 		}
-
-		headers.set("cookie", refreshCookies ?? "");
-		const modifiedRequest = new NextRequest(request, {
-			headers: headers,
-		});
-
-		const response = NextResponse.next({
-			request: modifiedRequest,
-		});
-
-		for (const cookie of parsed) {
-			response.cookies.set(cookie as never);
-		}
-
-		return response;
 	}
 
 	return NextResponse.next();
