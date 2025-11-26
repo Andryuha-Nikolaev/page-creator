@@ -1,8 +1,0 @@
-@use "$styles/functions/convert";
-
-.block {
-	padding: convert.to-rem(100) convert.to-rem(20);
-	display: flex;
-	flex-direction: column;
-	gap: convert.to-rem(20);
-}

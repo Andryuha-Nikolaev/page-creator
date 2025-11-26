@@ -1,15 +1,13 @@
 import Link from "next/link";
 
-import { getUser } from "$entities/user";
+import { ROUTES_CONSTANTS } from "$shared/config";
 
-export default async function Develop() {
-	const user = await getUser();
-
+export default function Develop() {
 	return (
 		<>
-			<h1>{user?.name}</h1>
-			<p>DevelopPage</p>
-			<Link href="/develop/auth">/develop/auth</Link>
+			<h1>DevelopPage</h1>
+
+			<Link href={ROUTES_CONSTANTS.HOME}>Home</Link>
 		</>
 	);
 }
