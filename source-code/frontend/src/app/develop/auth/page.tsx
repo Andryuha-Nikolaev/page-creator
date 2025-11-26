@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-import { getUser } from "$features/user";
+import { getUser } from "$entities/user";
 
 import { AuthPage } from "./AuthPage";
 

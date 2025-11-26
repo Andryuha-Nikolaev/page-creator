@@ -1,3 +1,5 @@
+import { updateTag } from "next/cache";
+
 import { profile } from "$shared/api/code-gen";
 import { REVALIDATE_TAGS } from "$shared/config";
 import { headersFromCookies } from "$shared/lib/api/cookies";
@@ -34,4 +36,10 @@ export async function getUser() {
 		console.error(error);
 		throw error;
 	}
+}
+
+// eslint-disable-next-line @typescript-eslint/require-await
+export async function revalidateUserAction() {
+	"use server";
+	updateTag(REVALIDATE_TAGS.USER);
 }

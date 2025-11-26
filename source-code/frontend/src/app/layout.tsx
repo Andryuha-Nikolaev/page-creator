@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import "./styles/index.scss";
 
 import { viewportConfig } from "$shared/config";
-import { getUser } from "$features/user";
+import { getUser } from "$entities/user";
 
 export const metadata: Metadata = {
 	title: "Create Next App",

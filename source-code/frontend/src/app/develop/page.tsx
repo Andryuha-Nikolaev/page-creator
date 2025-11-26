@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-import { getUser } from "$features/user";
+import { getUser } from "$entities/user";
 
 export default async function Develop() {
 	const user = await getUser();
