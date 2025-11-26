@@ -4,7 +4,7 @@ import { updateTag } from "next/cache";
 
 import { updateProfile, type UserDto } from "$shared/api/code-gen";
 import { REVALIDATE_TAGS } from "$shared/config";
-import { headersFromCookies } from "$shared/lib/api/cookies";
+import { headersFromCookies } from "$shared/lib/cookies";
 
 export async function updateUserAction(data: UserDto) {
 	try {

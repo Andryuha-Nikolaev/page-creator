@@ -10,7 +10,7 @@ import {
 	ROUTES_CONSTANTS,
 } from "$shared/config";
 import { pickCookiesFromResponse } from "$shared/lib";
-import { headersFromCookies } from "$shared/lib/api/cookies";
+import { headersFromCookies } from "$shared/lib/cookies";
 
 export async function logoutAction() {
 	try {

@@ -1,6 +1,6 @@
 import { profile } from "$shared/api/code-gen";
 import { REVALIDATE_TAGS } from "$shared/config";
-import { headersFromCookies } from "$shared/lib/api/cookies";
+import { headersFromCookies } from "$shared/lib";
 
 import { isUserMaybeAuthorized } from "../lib/checks";
 
