@@ -1,6 +1,6 @@
 import { cookies } from "next/headers";
 
-import { AUTH_CONSTANTS } from "$app/develop/auth/config/constants";
+import { AUTH_CONSTANTS } from "$shared/config";
 
 export const isUserMaybeAuthorized = async () => {
 	const cookieStore = await cookies();

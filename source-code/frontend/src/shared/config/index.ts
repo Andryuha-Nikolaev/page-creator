@@ -1,3 +1,5 @@
+export { HEADERS_CONSTANTS } from "./headers";
+
 export { AUTH_CONSTANTS } from "./auth";
 
 export { ROUTES_CONSTANTS, ACCOUNT_ROUTE } from "./routes";

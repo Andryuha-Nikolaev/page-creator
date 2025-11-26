@@ -10,14 +10,20 @@ export const SettingsPage = () => {
 	return (
 		<div>
 			<h1>SettingsPage</h1>
-			<Link href={ROUTES_CONSTANTS.HOME}>Home</Link>
-			<button onClick={() => void logoutAction()}>Logout</button>
-			<button onClick={() => void updateUserAction({ name: "Andrey" })}>
-				Update Andrey
-			</button>
-			<button onClick={() => void updateUserAction({ name: "Andreyka" })}>
-				Update Andreyka
-			</button>
+			<Link href={ROUTES_CONSTANTS.HOME}>Home page</Link>
+			<div>
+				<button onClick={() => void logoutAction()}>Logout</button>
+			</div>
+			<div>
+				<button onClick={() => void updateUserAction({ name: "Andrey" })}>
+					Update Andrey
+				</button>
+			</div>
+			<div>
+				<button onClick={() => void updateUserAction({ name: "Andreyka" })}>
+					Update Andreyka
+				</button>
+			</div>
 		</div>
 	);
 };

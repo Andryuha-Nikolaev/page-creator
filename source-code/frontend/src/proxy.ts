@@ -3,8 +3,12 @@ import { NextResponse, type NextRequest } from "next/server";
 import { parse } from "set-cookie-parser";
 
 import { getNewTokens } from "$shared/api/code-gen";
-import { ACCOUNT_ROUTE } from "$shared/config";
-import { AUTH_CONSTANTS } from "$app/develop/auth/config/constants";
+import {
+	ACCOUNT_ROUTE,
+	AUTH_CONSTANTS,
+	HEADERS_CONSTANTS,
+	ROUTES_CONSTANTS,
+} from "$shared/config";
 
 export async function proxy(request: NextRequest) {
 	const accessToken = request.cookies.get(AUTH_CONSTANTS.ACCESS_TOKEN_NAME);
@@ -12,7 +16,9 @@ export async function proxy(request: NextRequest) {
 
 	if (!accessToken && !refreshToken) {
 		if (request.nextUrl.pathname.startsWith(ACCOUNT_ROUTE)) {
-			const response = NextResponse.redirect(new URL(request.nextUrl.origin));
+			const response = NextResponse.redirect(
+				new URL(`${request.nextUrl.origin}${ROUTES_CONSTANTS.LOGIN} `)
+			);
 
 			return response;
 		}
@@ -47,7 +53,14 @@ export async function proxy(request: NextRequest) {
 		}
 	}
 
-	return NextResponse.next();
+	const headers = new Headers(request.headers);
+	headers.set(HEADERS_CONSTANTS.PATHNAME, request.nextUrl.pathname);
+
+	return NextResponse.next({
+		request: {
+			headers,
+		},
+	});
 }
 
 export const config = {

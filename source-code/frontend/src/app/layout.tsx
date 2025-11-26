@@ -22,8 +22,14 @@ export default async function RootLayout({
 	return (
 		<html lang="ru">
 			<body>
-				<main>
-					<h1>{user?.name}</h1>
+				<main
+					style={{
+						alignItems: "center",
+						justifyContent: "center",
+						textAlign: "center",
+					}}
+				>
+					<h3>{user?.name ?? "No login"}</h3>
 					{children}
 				</main>
 			</body>
