@@ -11,8 +11,8 @@ import {
 } from "$shared/config";
 
 export async function proxy(request: NextRequest) {
-	const accessToken = request.cookies.get(AUTH_CONSTANTS.ACCESS_TOKEN_NAME);
-	const refreshToken = request.cookies.get(AUTH_CONSTANTS.REFRESH_TOKEN_NAME);
+	const accessToken = request.cookies.has(AUTH_CONSTANTS.ACCESS_TOKEN_NAME);
+	const refreshToken = request.cookies.has(AUTH_CONSTANTS.REFRESH_TOKEN_NAME);
 
 	if (!accessToken && !refreshToken) {
 		if (request.nextUrl.pathname.startsWith(ACCOUNT_ROUTE)) {
@@ -25,10 +25,12 @@ export async function proxy(request: NextRequest) {
 	}
 
 	if (!accessToken && refreshToken) {
+		const requestCookies = request.headers.get("cookie") ?? "";
+
 		try {
 			const { response: newTokensResponse } = await getNewTokens({
 				headers: {
-					cookie: `${refreshToken.name}=${refreshToken.value};`,
+					cookie: requestCookies,
 				},
 			});
 
