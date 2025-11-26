@@ -17,14 +17,20 @@ export async function proxy(request: NextRequest) {
 				},
 			});
 
+			const response = NextResponse.next();
+
 			if (newTokensResponse.ok) {
 				const parsed = parse(newTokensResponse.headers.getSetCookie());
-				const response = NextResponse.next();
 
 				for (const cookie of parsed) {
 					response.cookies.set(cookie as never);
 				}
 
+				return response;
+			}
+
+			if (newTokensResponse.status === 401) {
+				response.cookies.delete(AUTH_CONSTANTS.REFRESH_TOKEN_NAME);
 				return response;
 			}
 		} catch (error) {
