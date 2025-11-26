@@ -29,12 +29,12 @@ export async function proxy(request: NextRequest) {
 				return response;
 			}
 
-			if (newTokensResponse.status === 401) {
-				response.cookies.delete(AUTH_CONSTANTS.REFRESH_TOKEN_NAME);
-				return response;
-			}
+			response.cookies.delete(AUTH_CONSTANTS.ACCESS_TOKEN_NAME);
+			response.cookies.delete(AUTH_CONSTANTS.REFRESH_TOKEN_NAME);
+			return response;
 		} catch (error) {
 			console.error(error);
+			throw error;
 		}
 	}
 
