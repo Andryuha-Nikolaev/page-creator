@@ -1,8 +1,7 @@
 import { profile } from "$shared/api/code-gen";
 import { REVALIDATE_TAGS } from "$shared/config";
 import { getHeadersFromCookies } from "$shared/lib";
-
-import { isUserMaybeAuthorized } from "../lib/checks";
+import { isUserMaybeAuthorized } from "$features/auth";
 
 export async function getUser() {
 	console.log("get user");

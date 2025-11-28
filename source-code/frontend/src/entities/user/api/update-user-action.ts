@@ -13,6 +13,8 @@ export async function updateUserAction(data: UserDto) {
 			headers: await getHeadersFromCookies(),
 		});
 
+		console.log(response);
+
 		if (response.ok) {
 			updateTag(REVALIDATE_TAGS.USER);
 		}
