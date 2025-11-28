@@ -4,4 +4,5 @@ export const ROUTES_CONSTANTS = {
 	HOME: "/",
 	SETTINGS: `${ACCOUNT_ROUTE}/settings`,
 	LOGIN: "/login",
+	LOGOUT: "/logout",
 };

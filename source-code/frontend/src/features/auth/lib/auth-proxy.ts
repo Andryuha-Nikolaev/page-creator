@@ -26,7 +26,7 @@ export const authProxy = async (request: NextRequest) => {
 	});
 
 	const redirectResponse = NextResponse.redirect(
-		new URL(`${request.nextUrl.origin}${ROUTES_CONSTANTS.LOGIN}`)
+		new URL(`${request.nextUrl.origin}${ROUTES_CONSTANTS.LOGOUT}`)
 	);
 
 	if (requestPathname.startsWith(ACCOUNT_ROUTE)) {
