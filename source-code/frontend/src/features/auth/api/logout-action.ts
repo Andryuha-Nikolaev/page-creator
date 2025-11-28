@@ -13,20 +13,13 @@ import { pickCookiesFromResponse } from "$shared/lib";
 import { getHeadersFromCookies } from "$shared/lib/cookies";
 
 export async function logoutAction() {
-	try {
-		const { response } = await logout({
-			headers: await getHeadersFromCookies(),
-		});
+	const { response } = await logout({
+		headers: await getHeadersFromCookies(),
+	});
 
-		if (response.ok) {
-			await pickCookiesFromResponse(response);
-			return;
-		}
-
-		throw new Error(`Logout error: ${response.status}`);
-	} catch (error) {
-		console.error(error);
-
+	if (response.ok) {
+		await pickCookiesFromResponse(response);
+	} else {
 		const cookieStore = await cookies();
 		cookieStore.delete(AUTH_CONSTANTS.ACCESS_TOKEN_NAME);
 		cookieStore.delete(AUTH_CONSTANTS.REFRESH_TOKEN_NAME);

@@ -61,5 +61,13 @@ export const authProxy = async (request: NextRequest) => {
 		}
 	}
 
+	if (requestPathname.startsWith(ROUTES_CONSTANTS.LOGIN)) {
+		if (accessToken && refreshToken) {
+			return NextResponse.redirect(
+				new URL(`${request.nextUrl.origin}${ROUTES_CONSTANTS.SETTINGS}`)
+			);
+		}
+	}
+
 	return response;
 };
