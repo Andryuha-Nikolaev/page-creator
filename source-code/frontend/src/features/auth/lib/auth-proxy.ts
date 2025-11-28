@@ -35,11 +35,7 @@ export const authProxy = async (request: NextRequest) => {
 		}
 	}
 
-	if (
-		!accessToken &&
-		refreshToken &&
-		requestPathname !== ROUTES_CONSTANTS.LOGIN
-	) {
+	if (!accessToken && refreshToken) {
 		const requestCookies = request.headers.get("cookie") ?? "";
 
 		const { response: newTokensResponse } = await getNewTokens({

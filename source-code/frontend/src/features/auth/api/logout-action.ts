@@ -7,6 +7,7 @@ import { logout } from "$shared/api/code-gen";
 import {
 	ACCOUNT_ROUTE,
 	AUTH_CONSTANTS,
+	HEADERS,
 	ROUTES_CONSTANTS,
 } from "$shared/config";
 import { pickCookiesFromResponse } from "$shared/lib";
@@ -26,7 +27,7 @@ export async function logoutAction() {
 	}
 
 	const headersList = await headers();
-	const pathname = headersList.get("x-pathname");
+	const pathname = headersList.get(HEADERS.PATHNAME);
 
 	if (pathname?.includes(ACCOUNT_ROUTE)) {
 		redirect(ROUTES_CONSTANTS.HOME);
