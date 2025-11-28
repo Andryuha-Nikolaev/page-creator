@@ -25,13 +25,11 @@ export const authProxy = async (request: NextRequest) => {
 		},
 	});
 
-	const redirectResponse = NextResponse.redirect(
-		new URL(`${request.nextUrl.origin}${ROUTES_CONSTANTS.LOGOUT}`)
-	);
-
 	if (requestPathname.startsWith(ACCOUNT_ROUTE)) {
 		if (!accessToken && !refreshToken) {
-			return redirectResponse;
+			return NextResponse.redirect(
+				new URL(`${request.nextUrl.origin}${ROUTES_CONSTANTS.LOGIN}`)
+			);
 		}
 	}
 
@@ -47,18 +45,6 @@ export const authProxy = async (request: NextRequest) => {
 		if (newTokensResponse.ok) {
 			const parsed = parse(newTokensResponse.headers.getSetCookie());
 
-			if (requestPathname.startsWith(ROUTES_CONSTANTS.LOGIN)) {
-				const redirectResponse = NextResponse.redirect(
-					new URL(`${request.nextUrl.origin}${ROUTES_CONSTANTS.SETTINGS}`)
-				);
-
-				for (const cookie of parsed) {
-					redirectResponse.cookies.set(cookie as never);
-				}
-
-				return redirectResponse;
-			}
-
 			for (const cookie of parsed) {
 				response.cookies.set(cookie as never);
 			}
@@ -66,7 +52,7 @@ export const authProxy = async (request: NextRequest) => {
 	}
 
 	if (requestPathname.startsWith(ROUTES_CONSTANTS.LOGIN)) {
-		if (accessToken && refreshToken) {
+		if (refreshToken) {
 			return NextResponse.redirect(
 				new URL(`${request.nextUrl.origin}${ROUTES_CONSTANTS.SETTINGS}`)
 			);
