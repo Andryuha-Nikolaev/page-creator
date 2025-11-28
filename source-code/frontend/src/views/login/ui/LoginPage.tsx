@@ -1,21 +1,11 @@
 "use client";
 
-import { useEffect } from "react";
 import Link from "next/link";
 
 import { ROUTES_CONSTANTS } from "$shared/config";
-import { revalidateUserAction } from "$entities/user";
 import { loginAction } from "$features/auth";
 
 export const LoginPage = () => {
-	useEffect(() => {
-		console.log("update user action");
-
-		// TODO:
-
-		void revalidateUserAction();
-	}, []);
-
 	return (
 		<div>
 			<h1>LoginPage</h1>

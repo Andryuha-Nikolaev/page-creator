@@ -47,13 +47,21 @@ export const authProxy = async (request: NextRequest) => {
 		if (newTokensResponse.ok) {
 			const parsed = parse(newTokensResponse.headers.getSetCookie());
 
+			if (requestPathname.startsWith(ROUTES_CONSTANTS.LOGIN)) {
+				const redirectResponse = NextResponse.redirect(
+					new URL(`${request.nextUrl.origin}${ROUTES_CONSTANTS.SETTINGS}`)
+				);
+
+				for (const cookie of parsed) {
+					redirectResponse.cookies.set(cookie as never);
+				}
+
+				return redirectResponse;
+			}
+
 			for (const cookie of parsed) {
 				response.cookies.set(cookie as never);
 			}
-		} else {
-			redirectResponse.cookies.delete(AUTH_CONSTANTS.REFRESH_TOKEN_NAME);
-
-			return redirectResponse;
 		}
 	}
 

@@ -3,20 +3,13 @@
 import Link from "next/link";
 
 import { ROUTES_CONSTANTS } from "$shared/config";
-import { useUserContext } from "$entities/user";
 import { updateUserAction } from "$entities/user/api/update-user-action";
 import { logoutAction } from "$features/auth";
 
 export const SettingsPage = () => {
-	const user = useUserContext();
-
-	if (!user) {
-		return null;
-	}
-
 	return (
 		<div>
-			<h1>SettingsPage {user.email}</h1>
+			<h1>SettingsPage</h1>
 			<Link href={ROUTES_CONSTANTS.HOME}>Home page</Link>
 			<div>
 				<button onClick={() => void logoutAction()}>Logout</button>
