@@ -12,6 +12,9 @@ export const LoginPage = () => {
 			<div>
 				<Link href={ROUTES_CONSTANTS.HOME}>Home page</Link>
 			</div>
+			<div>
+				<Link href={ROUTES_CONSTANTS.SETTINGS}>Account settings page</Link>
+			</div>
 			<button onClick={() => void loginAction()}>On login</button>
 		</div>
 	);

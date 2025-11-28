@@ -1,1 +1,1 @@
-export { pickCookiesFromResponse, headersFromCookies } from "./cookies";
+export { pickCookiesFromResponse, getHeadersFromCookies } from "./cookies";

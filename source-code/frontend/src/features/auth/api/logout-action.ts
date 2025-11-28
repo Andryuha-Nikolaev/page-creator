@@ -10,12 +10,12 @@ import {
 	ROUTES_CONSTANTS,
 } from "$shared/config";
 import { pickCookiesFromResponse } from "$shared/lib";
-import { headersFromCookies } from "$shared/lib/cookies";
+import { getHeadersFromCookies } from "$shared/lib/cookies";
 
 export async function logoutAction() {
 	try {
 		const { response } = await logout({
-			headers: await headersFromCookies(),
+			headers: await getHeadersFromCookies(),
 		});
 
 		if (response.ok) {

@@ -9,11 +9,9 @@ export const HomePage = () => {
 		<div className={s.block}>
 			<h1>HomePage</h1>
 			<div>
-				{" "}
 				<Link href={ROUTES_CONSTANTS.SETTINGS}>Account settings page</Link>
 			</div>
 			<div>
-				{" "}
 				<Link href={ROUTES_CONSTANTS.LOGIN}>Login page</Link>
 			</div>
 		</div>

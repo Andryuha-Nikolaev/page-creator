@@ -1,6 +1,6 @@
 import { profile } from "$shared/api/code-gen";
 import { REVALIDATE_TAGS } from "$shared/config";
-import { headersFromCookies } from "$shared/lib";
+import { getHeadersFromCookies } from "$shared/lib";
 
 import { isUserMaybeAuthorized } from "../lib/checks";
 
@@ -15,7 +15,7 @@ export async function getUser() {
 
 	try {
 		const { data, response } = await profile({
-			headers: await headersFromCookies(),
+			headers: await getHeadersFromCookies(),
 			next: {
 				tags: [REVALIDATE_TAGS.USER],
 			},

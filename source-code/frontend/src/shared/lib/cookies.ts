@@ -19,7 +19,7 @@ export async function pickCookiesFromResponse(response: Response) {
 	}
 }
 
-export async function headersFromCookies(): Promise<HeadersInit> {
+export async function getHeadersFromCookies(): Promise<HeadersInit> {
 	const cookiesStore = await cookies();
 
 	return {
