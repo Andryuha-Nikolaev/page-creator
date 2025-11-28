@@ -1,3 +1,3 @@
-export const HEADERS_CONSTANTS = {
-	PATHNAME: "x-pathname",
-};
+export const enum HEADERS {
+	PATHNAME = "x-pathname",
+}

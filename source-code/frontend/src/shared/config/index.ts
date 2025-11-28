@@ -1,4 +1,4 @@
-export { HEADERS_CONSTANTS } from "./headers";
+export { HEADERS } from "./headers";
 
 export { AUTH_CONSTANTS } from "./auth";
 
