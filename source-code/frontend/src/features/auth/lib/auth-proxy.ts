@@ -39,24 +39,20 @@ export const authProxy = async (request: NextRequest) => {
 	if (!accessToken && refreshToken) {
 		const requestCookies = request.headers.get("cookie") ?? "";
 
-		try {
-			const { response: newTokensResponse } = await getNewTokens({
-				headers: {
-					cookie: requestCookies,
-				},
-			});
+		const { response: newTokensResponse } = await getNewTokens({
+			headers: {
+				cookie: requestCookies,
+			},
+		});
 
-			if (newTokensResponse.ok) {
-				const parsed = parse(newTokensResponse.headers.getSetCookie());
+		if (newTokensResponse.ok) {
+			const parsed = parse(newTokensResponse.headers.getSetCookie());
 
-				for (const cookie of parsed) {
-					response.cookies.set(cookie as never);
-				}
-			} else {
-				response.cookies.delete(AUTH_CONSTANTS.REFRESH_TOKEN_NAME);
+			for (const cookie of parsed) {
+				response.cookies.set(cookie as never);
 			}
-		} catch (error) {
-			console.error("Token refresh failed:", error);
+		} else {
+			response.cookies.delete(AUTH_CONSTANTS.REFRESH_TOKEN_NAME);
 		}
 	}
 
