@@ -47,7 +47,5 @@ export const createApi = async ({
 		});
 	}
 
-	// console.log(client.getConfig());
-
 	return client;
 };
