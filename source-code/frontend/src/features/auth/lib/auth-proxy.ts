@@ -16,6 +16,9 @@ export const authProxy = async (request: NextRequest) => {
 
 	const requestPathname = request.nextUrl.pathname;
 
+	const isLoginRoute = requestPathname === ROUTES_CONSTANTS.LOGIN;
+	const isAccountRoute = requestPathname.startsWith(ACCOUNT_ROUTE);
+
 	const headers = new Headers(request.headers);
 	headers.set(HEADERS.PATHNAME, requestPathname);
 
@@ -25,10 +28,10 @@ export const authProxy = async (request: NextRequest) => {
 		},
 	});
 
-	if (requestPathname.startsWith(ACCOUNT_ROUTE)) {
+	if (isAccountRoute) {
 		if (!accessToken && !refreshToken) {
 			return NextResponse.redirect(
-				new URL(`${request.nextUrl.origin}${ROUTES_CONSTANTS.LOGIN}`)
+				new URL(ROUTES_CONSTANTS.LOGIN, request.url)
 			);
 		}
 	}
@@ -54,14 +57,13 @@ export const authProxy = async (request: NextRequest) => {
 			}
 		} catch (error) {
 			console.error("Token refresh failed:", error);
-			throw error;
 		}
 	}
 
-	if (requestPathname === ROUTES_CONSTANTS.LOGIN) {
+	if (isLoginRoute) {
 		if (accessToken || refreshToken) {
 			return NextResponse.redirect(
-				new URL(`${request.nextUrl.origin}${ROUTES_CONSTANTS.SETTINGS}`)
+				new URL(ROUTES_CONSTANTS.SETTINGS, request.url)
 			);
 		}
 	}
