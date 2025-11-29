@@ -25,14 +25,6 @@ export const authProxy = async (request: NextRequest) => {
 		},
 	});
 
-	if (requestPathname.startsWith(ROUTES_CONSTANTS.LOGIN)) {
-		if (refreshToken) {
-			return NextResponse.redirect(
-				new URL(`${request.nextUrl.origin}${ROUTES_CONSTANTS.SETTINGS}`)
-			);
-		}
-	}
-
 	if (requestPathname.startsWith(ACCOUNT_ROUTE)) {
 		if (!accessToken && !refreshToken) {
 			return NextResponse.redirect(
@@ -44,20 +36,33 @@ export const authProxy = async (request: NextRequest) => {
 	if (!accessToken && refreshToken) {
 		const requestCookies = request.headers.get("cookie") ?? "";
 
-		const { response: newTokensResponse } = await getNewTokens({
-			headers: {
-				cookie: requestCookies,
-			},
-		});
+		try {
+			const { response: newTokensResponse } = await getNewTokens({
+				headers: {
+					cookie: requestCookies,
+				},
+			});
 
-		if (newTokensResponse.ok) {
-			const parsed = parse(newTokensResponse.headers.getSetCookie());
+			if (newTokensResponse.ok) {
+				const parsed = parse(newTokensResponse.headers.getSetCookie());
 
-			for (const cookie of parsed) {
-				response.cookies.set(cookie as never);
+				for (const cookie of parsed) {
+					response.cookies.set(cookie as never);
+				}
+			} else {
+				response.cookies.delete(AUTH_CONSTANTS.REFRESH_TOKEN_NAME);
 			}
-		} else {
-			response.cookies.delete(AUTH_CONSTANTS.REFRESH_TOKEN_NAME);
+		} catch (error) {
+			console.error("Token refresh failed:", error);
+			throw error;
+		}
+	}
+
+	if (requestPathname === ROUTES_CONSTANTS.LOGIN) {
+		if (accessToken || refreshToken) {
+			return NextResponse.redirect(
+				new URL(`${request.nextUrl.origin}${ROUTES_CONSTANTS.SETTINGS}`)
+			);
 		}
 	}
 

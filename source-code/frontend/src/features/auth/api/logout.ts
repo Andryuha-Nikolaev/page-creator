@@ -29,7 +29,7 @@ export async function logout() {
 	const headersList = await headers();
 	const pathname = headersList.get(HEADERS.PATHNAME);
 
-	if (pathname?.includes(ACCOUNT_ROUTE)) {
+	if (pathname?.startsWith(ACCOUNT_ROUTE)) {
 		redirect(ROUTES_CONSTANTS.HOME);
 	}
 }

@@ -7,7 +7,7 @@ import { parse } from "set-cookie-parser";
 export async function pickCookiesFromResponse(response: Response) {
 	const setCookie = response.headers.getSetCookie();
 
-	if (!setCookie) {
+	if (!setCookie || !setCookie.length) {
 		return;
 	}
 

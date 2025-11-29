@@ -21,8 +21,8 @@ export default async function RootLayout({
 
 	return (
 		<html lang="ru">
-			<UserContextProvider value={user}>
-				<body>
+			<body>
+				<UserContextProvider value={user}>
 					<main
 						style={{
 							alignItems: "center",
@@ -33,8 +33,8 @@ export default async function RootLayout({
 						<h3>{user?.name ?? "No login"}</h3>
 						{children}
 					</main>
-				</body>
-			</UserContextProvider>
+				</UserContextProvider>
+			</body>
 		</html>
 	);
 }

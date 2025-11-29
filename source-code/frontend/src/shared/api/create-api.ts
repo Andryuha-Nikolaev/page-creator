@@ -7,10 +7,13 @@ import { createClientConfig } from "./hey-api";
 
 type CreateApi = {
 	withCookies?: boolean;
-	withNotFound?: boolean;
+	withUnauthorized?: boolean;
 };
 
-export const createApi = async ({ withCookies, withNotFound }: CreateApi) => {
+export const createApi = async ({
+	withCookies,
+	withUnauthorized,
+}: CreateApi) => {
 	const client = createClient(createClientConfig());
 
 	if (withCookies) {
@@ -21,10 +24,8 @@ export const createApi = async ({ withCookies, withNotFound }: CreateApi) => {
 		});
 	}
 
-	if (withNotFound) {
+	if (withUnauthorized) {
 		client.interceptors.response.use((response) => {
-			console.log(response.status);
-
 			if (response.status === 401) {
 				redirect("/");
 			}
