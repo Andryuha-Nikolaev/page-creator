@@ -25,6 +25,14 @@ export const authProxy = async (request: NextRequest) => {
 		},
 	});
 
+	if (requestPathname.startsWith(ROUTES_CONSTANTS.LOGIN)) {
+		if (refreshToken) {
+			return NextResponse.redirect(
+				new URL(`${request.nextUrl.origin}${ROUTES_CONSTANTS.SETTINGS}`)
+			);
+		}
+	}
+
 	if (requestPathname.startsWith(ACCOUNT_ROUTE)) {
 		if (!accessToken && !refreshToken) {
 			return NextResponse.redirect(
@@ -48,14 +56,8 @@ export const authProxy = async (request: NextRequest) => {
 			for (const cookie of parsed) {
 				response.cookies.set(cookie as never);
 			}
-		}
-	}
-
-	if (requestPathname.startsWith(ROUTES_CONSTANTS.LOGIN)) {
-		if (refreshToken) {
-			return NextResponse.redirect(
-				new URL(`${request.nextUrl.origin}${ROUTES_CONSTANTS.SETTINGS}`)
-			);
+		} else {
+			response.cookies.delete(AUTH_CONSTANTS.REFRESH_TOKEN_NAME);
 		}
 	}
 
