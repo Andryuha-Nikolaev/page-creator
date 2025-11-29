@@ -1,6 +1,6 @@
-export { UserContextProvider, useUserContext } from "./ui/context";
+export { updateUser } from "./api/update-user";
 
-export { revalidateUserAction } from "./api/revalidate-user-action";
+export { UserContextProvider, useUserContext } from "./ui/context";
 
 export { getUser } from "./api/get-user";
 export { isUserMaybeAuthorized } from "./lib/checks";

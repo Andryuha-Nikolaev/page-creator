@@ -3,7 +3,7 @@
 import { cookies, headers } from "next/headers";
 import { redirect } from "next/navigation";
 
-import { logout } from "$shared/api/code-gen";
+import { logout as onLogout } from "$shared/api/code-gen";
 import {
 	ACCOUNT_ROUTE,
 	AUTH_CONSTANTS,
@@ -13,8 +13,8 @@ import {
 import { pickCookiesFromResponse } from "$shared/lib";
 import { getHeadersFromCookies } from "$shared/lib/cookies";
 
-export async function logoutAction() {
-	const { response } = await logout({
+export async function logout() {
+	const { response } = await onLogout({
 		headers: await getHeadersFromCookies(),
 	});
 

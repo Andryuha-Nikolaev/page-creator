@@ -1,3 +1,3 @@
 export { authProxy } from "./lib/auth-proxy";
-export { logoutAction } from "./api/logout-action";
-export { loginAction } from "./api/login-action";
+export { logout } from "./api/logout";
+export { login } from "./api/login";
