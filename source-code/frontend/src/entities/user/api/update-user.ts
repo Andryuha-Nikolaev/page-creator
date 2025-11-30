@@ -10,11 +10,9 @@ export async function updateUser(data: UserDto) {
 	const client = await createApi({ bearer: true, authorized: true });
 
 	const { response } = await updateProfile({
+		client,
 		body: data,
-		client: client,
 	});
-
-	console.log(response.status);
 
 	if (response.ok) {
 		updateTag(REVALIDATE_TAGS.USER);

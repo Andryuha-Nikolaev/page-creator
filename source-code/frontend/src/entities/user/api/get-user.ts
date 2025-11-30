@@ -16,7 +16,7 @@ export async function getUser() {
 	const client = await createApi({ bearer: true });
 
 	const { data, error } = await profile({
-		client: client,
+		client,
 		next: {
 			tags: [REVALIDATE_TAGS.USER],
 		},
