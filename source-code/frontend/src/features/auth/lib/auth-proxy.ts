@@ -37,11 +37,11 @@ export const authProxy = async (request: NextRequest) => {
 	}
 
 	if (!accessToken && refreshToken) {
-		const requestCookies = request.headers.get("cookie") ?? "";
+		const refresh = request.cookies.get(AUTH_CONSTANTS.REFRESH_TOKEN_NAME);
 
 		const { response: newTokensResponse } = await getNewTokens({
 			headers: {
-				cookie: requestCookies,
+				cookie: `${refresh?.name} = ${refresh?.value};`,
 			},
 		});
 
