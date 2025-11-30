@@ -15,7 +15,7 @@ export async function getUser() {
 
 	const client = await createApi({ cookies: true });
 
-	const { data, response } = await profile({
+	const { data, response, error } = await profile({
 		client: client,
 		next: {
 			tags: [REVALIDATE_TAGS.USER],
@@ -30,5 +30,5 @@ export async function getUser() {
 		return null;
 	}
 
-	throw new Error(`Get user error: ${response.status}`);
+	throw new Error(`${error.message} (${error.statusCode})`);
 }

@@ -57,7 +57,6 @@ export const authProxy = async (request: NextRequest) => {
 	}
 
 	if (isLoginRoute) {
-		// TODO: only access
 		if (accessToken || refreshToken) {
 			return NextResponse.redirect(
 				new URL(ROUTES_CONSTANTS.SETTINGS, request.url)
