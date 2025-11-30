@@ -7,7 +7,7 @@ import { updateProfile, type UserDto } from "$shared/api/code-gen";
 import { REVALIDATE_TAGS } from "$shared/config";
 
 export async function updateUser(data: UserDto) {
-	const client = await createApi({ authorized: true });
+	const client = await createApi({ bearer: true, authorized: true });
 
 	const { response } = await updateProfile({
 		body: data,

@@ -13,7 +13,7 @@ export async function getUser() {
 		return null;
 	}
 
-	const client = await createApi({ cookies: true });
+	const client = await createApi({ bearer: true });
 
 	const { data, error } = await profile({
 		client: client,

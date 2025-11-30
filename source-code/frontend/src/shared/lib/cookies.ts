@@ -23,6 +23,6 @@ export async function getHeadersFromCookies(): Promise<HeadersInit> {
 	const cookiesStore = await cookies();
 
 	return {
-		cookie: cookiesStore.toString(),
+		Cookie: cookiesStore.toString(),
 	};
 }

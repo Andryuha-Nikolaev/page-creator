@@ -1,25 +1,40 @@
 import { notFound, redirect } from "next/navigation";
 
 import { ROUTES_CONSTANTS } from "$shared/config";
-import { getHeadersFromCookies } from "$shared/lib/index.server";
+import {
+	getHeadersFromCookies,
+	getHeadersWithBearer,
+} from "$shared/lib/index.server";
 
 import { createClient } from "./code-gen/client";
 import { createClientConfig } from "./hey-api";
 
 type CreateApi = {
+	bearer?: boolean;
 	cookies?: boolean;
 	authorized?: boolean;
 	notFoundHandler?: boolean;
 };
 
 export const createApi = async ({
+	bearer,
 	cookies,
 	authorized,
 	notFoundHandler,
 }: CreateApi) => {
 	const client = createClient(createClientConfig());
 
-	if (cookies || authorized) {
+	if (bearer) {
+		const headersWithBearer = await getHeadersWithBearer();
+
+		if (headersWithBearer) {
+			client.setConfig({
+				headers: headersWithBearer,
+			});
+		}
+	}
+
+	if (cookies) {
 		const headersFromCookies = await getHeadersFromCookies();
 
 		client.setConfig({
