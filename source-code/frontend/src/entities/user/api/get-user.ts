@@ -15,7 +15,7 @@ export async function getUser() {
 
 	const client = await createApi({ cookies: true });
 
-	const { data, response, error } = await profile({
+	const { data, error } = await profile({
 		client: client,
 		next: {
 			tags: [REVALIDATE_TAGS.USER],
@@ -26,7 +26,7 @@ export async function getUser() {
 		return data.user;
 	}
 
-	if (response.status === 401) {
+	if (error.statusCode === 401) {
 		return null;
 	}
 
