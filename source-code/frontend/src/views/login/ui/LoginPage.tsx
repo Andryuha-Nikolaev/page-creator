@@ -3,7 +3,7 @@
 import Link from "next/link";
 
 import { ROUTES_CONSTANTS } from "$shared/config";
-import { login } from "$features/auth";
+import { login } from "$features/auth/index.actions";
 
 export const LoginPage = () => {
 	return (

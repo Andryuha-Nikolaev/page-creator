@@ -4,7 +4,7 @@ import { redirect } from "next/navigation";
 
 import { login as onLogin } from "$shared/api/code-gen";
 import { ROUTES_CONSTANTS } from "$shared/config";
-import { pickCookiesFromResponse } from "$shared/lib";
+import { pickCookiesFromResponse } from "$shared/lib/index.server";
 
 export async function login() {
 	const { response } = await onLogin({

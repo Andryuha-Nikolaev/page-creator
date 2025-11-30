@@ -1,7 +1,7 @@
 import { notFound, redirect } from "next/navigation";
 
 import { ROUTES_CONSTANTS } from "$shared/config";
-import { getHeadersFromCookies } from "$shared/lib";
+import { getHeadersFromCookies } from "$shared/lib/index.server";
 
 import { createClient } from "./code-gen/client";
 import { createClientConfig } from "./hey-api";

@@ -4,7 +4,7 @@ import Link from "next/link";
 
 import { ROUTES_CONSTANTS } from "$shared/config";
 import { updateUser } from "$entities/user/api/update-user";
-import { logout } from "$features/auth";
+import { logout } from "$features/auth/index.actions";
 
 export const SettingsPage = () => {
 	return (

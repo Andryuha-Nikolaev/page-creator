@@ -1,8 +1,8 @@
-"use server";
+import "server-only";
 
+import { createApi } from "$shared/api";
 import { profile } from "$shared/api/code-gen";
 import { REVALIDATE_TAGS } from "$shared/config";
-import { getHeadersFromCookies } from "$shared/lib";
 
 import { isUserMaybeAuthorized } from "../lib/checks";
 
@@ -13,8 +13,10 @@ export async function getUser() {
 		return null;
 	}
 
+	const client = await createApi({ cookies: true });
+
 	const { data, response } = await profile({
-		headers: await getHeadersFromCookies(),
+		client: client,
 		next: {
 			tags: [REVALIDATE_TAGS.USER],
 		},

@@ -10,8 +10,8 @@ import {
 	HEADERS,
 	ROUTES_CONSTANTS,
 } from "$shared/config";
-import { pickCookiesFromResponse } from "$shared/lib";
 import { getHeadersFromCookies } from "$shared/lib/cookies";
+import { pickCookiesFromResponse } from "$shared/lib/index.server";
 
 export async function logout() {
 	const { response } = await onLogout({
