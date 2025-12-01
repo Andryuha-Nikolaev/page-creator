@@ -41,7 +41,7 @@ export const authProxy = async (request: NextRequest) => {
 
 		const { response: newTokensResponse } = await getNewTokens({
 			headers: {
-				cookie: `${refresh?.name} = ${refresh?.value};`,
+				Cookie: `${refresh?.name} = ${refresh?.value};`,
 			},
 		});
 
