@@ -10,6 +10,8 @@ import {
 	ROUTES_CONSTANTS,
 } from "$shared/config";
 
+import { getRedirectPath } from "./redirect";
+
 export const authProxy = async (request: NextRequest) => {
 	const accessToken = request.cookies.has(AUTH_CONSTANTS.ACCESS_TOKEN_NAME);
 	const refreshToken = request.cookies.has(AUTH_CONSTANTS.REFRESH_TOKEN_NAME);
@@ -31,7 +33,10 @@ export const authProxy = async (request: NextRequest) => {
 	if (isAccountRoute) {
 		if (!accessToken && !refreshToken) {
 			return NextResponse.redirect(
-				new URL(ROUTES_CONSTANTS.LOGIN, request.url)
+				new URL(
+					getRedirectPath(ROUTES_CONSTANTS.LOGIN, requestPathname),
+					request.url
+				)
 			);
 		}
 	}
