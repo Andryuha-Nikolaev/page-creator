@@ -1,10 +1,12 @@
+import { headers } from "next/headers";
 import { notFound, redirect } from "next/navigation";
 
-import { ROUTES_CONSTANTS } from "$shared/config";
+import { HEADERS, ROUTES_CONSTANTS } from "$shared/config";
 import {
 	getHeadersFromCookies,
 	getHeadersWithBearer,
 } from "$shared/lib/index.server";
+import { getRedirectPath } from "$features/auth";
 
 import { createClient } from "./code-gen/client";
 import { createClientConfig } from "./hey-api";
@@ -43,9 +45,11 @@ export const createApi = async ({
 	}
 
 	if (authorized) {
+		const redirectTo = (await headers()).get(HEADERS.PATHNAME) ?? undefined;
+
 		client.interceptors.response.use((response) => {
 			if (response.status === 401) {
-				redirect(ROUTES_CONSTANTS.LOGOUT);
+				redirect(getRedirectPath(ROUTES_CONSTANTS.LOGOUT, redirectTo));
 			}
 
 			return response;

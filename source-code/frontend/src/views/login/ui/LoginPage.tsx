@@ -3,6 +3,7 @@
 import Link from "next/link";
 
 import { ROUTES_CONSTANTS } from "$shared/config";
+import { parseReturnUrl } from "$features/auth";
 import { login } from "$features/auth/index.actions";
 
 export const LoginPage = () => {
@@ -15,7 +16,7 @@ export const LoginPage = () => {
 			<div>
 				<Link href={ROUTES_CONSTANTS.SETTINGS}>Account settings page</Link>
 			</div>
-			<button onClick={() => void login()}>On login</button>
+			<button onClick={() => void login(parseReturnUrl())}>On login</button>
 		</div>
 	);
 };
