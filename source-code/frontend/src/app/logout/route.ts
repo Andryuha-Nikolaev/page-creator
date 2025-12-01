@@ -1,12 +1,9 @@
-import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 
-import { AUTH_CONSTANTS, ROUTES_CONSTANTS } from "$shared/config";
+import { ROUTES_CONSTANTS } from "$shared/config";
+import { deleteAuthCookies } from "$shared/lib/cookies";
 
 export const GET = async () => {
-	const cookieStore = await cookies();
-
-	cookieStore.delete(AUTH_CONSTANTS.ACCESS_TOKEN_NAME);
-	cookieStore.delete(AUTH_CONSTANTS.REFRESH_TOKEN_NAME);
+	await deleteAuthCookies();
 	redirect(ROUTES_CONSTANTS.LOGIN);
 };

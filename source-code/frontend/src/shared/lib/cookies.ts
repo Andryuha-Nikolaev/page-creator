@@ -4,6 +4,8 @@ import { cookies } from "next/headers";
 
 import { parse } from "set-cookie-parser";
 
+import { AUTH_CONSTANTS } from "$shared/config";
+
 export async function pickCookiesFromResponse(response: Response) {
 	const setCookie = response.headers.getSetCookie();
 
@@ -25,4 +27,11 @@ export async function getHeadersFromCookies(): Promise<HeadersInit> {
 	return {
 		Cookie: cookiesStore.toString(),
 	};
+}
+
+export async function deleteAuthCookies() {
+	const cookieStore = await cookies();
+
+	cookieStore.delete(AUTH_CONSTANTS.ACCESS_TOKEN_NAME);
+	cookieStore.delete(AUTH_CONSTANTS.REFRESH_TOKEN_NAME);
 }

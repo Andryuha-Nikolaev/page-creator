@@ -1,3 +1,7 @@
 export { getHeadersWithBearer } from "./bearer";
 
-export { pickCookiesFromResponse, getHeadersFromCookies } from "./cookies";
+export {
+	pickCookiesFromResponse,
+	getHeadersFromCookies,
+	deleteAuthCookies,
+} from "./cookies";
