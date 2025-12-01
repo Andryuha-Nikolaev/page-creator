@@ -3,6 +3,8 @@ import type { Metadata } from "next";
 import "./styles/index.scss";
 
 import { viewportConfig } from "$shared/config";
+import { UserContextProvider } from "$entities/user";
+import { getUser } from "$entities/user/index.server";
 
 export const metadata: Metadata = {
 	title: "Create Next App",
@@ -11,15 +13,28 @@ export const metadata: Metadata = {
 
 export const viewport = viewportConfig;
 
-export default function RootLayout({
+export default async function RootLayout({
 	children,
 }: Readonly<{
 	children: React.ReactNode;
 }>) {
+	const user = await getUser();
+
 	return (
 		<html lang="ru">
 			<body>
-				<main>{children}</main>
+				<UserContextProvider value={user}>
+					<main
+						style={{
+							alignItems: "center",
+							justifyContent: "center",
+							textAlign: "center",
+						}}
+					>
+						<h3>{user?.name ?? "No login"}</h3>
+						{children}
+					</main>
+				</UserContextProvider>
 			</body>
 		</html>
 	);

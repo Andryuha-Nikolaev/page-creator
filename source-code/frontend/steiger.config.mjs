@@ -14,4 +14,10 @@ export default defineConfig([
 			"fsd/public-api": "off",
 		},
 	},
+	{
+		files: ["./src/shared/api/code-gen/**"],
+		rules: {
+			"fsd/no-public-api-sidestep": "off",
+		},
+	},
 ]);
