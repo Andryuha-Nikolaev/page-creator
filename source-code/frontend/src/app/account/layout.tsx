@@ -22,7 +22,7 @@ export default function AccountLayout({
 	}, [router, user]);
 
 	if (!user) {
-		return <div>Redirecting...</div>;
+		return null;
 	}
 
 	return children;
