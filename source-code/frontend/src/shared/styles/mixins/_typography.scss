@@ -1,0 +1,91 @@
+@use "$styles/functions/convert";
+@use "$styles/mixins/breakpoints";
+@use "$styles/mixins/transition";
+@use "$styles/mixins/interaction";
+@use "$styles/variables/colors";
+
+@mixin h1() {
+	font-weight: 400;
+	font-size: convert.to-rem(32);
+	line-height: 1.2;
+
+	@include breakpoints.lg {
+		font-size: convert.to-rem(42);
+	}
+}
+
+@mixin h2() {
+	font-weight: 400;
+	font-size: convert.to-rem(28);
+	line-height: 1.2;
+
+	@include breakpoints.lg {
+		font-size: convert.to-rem(36);
+	}
+}
+
+@mixin h3() {
+	font-weight: 400;
+	font-size: convert.to-rem(22);
+	line-height: 1.2;
+
+	@include breakpoints.lg {
+		font-size: convert.to-rem(28);
+	}
+}
+
+@mixin h4() {
+	font-weight: 600;
+	font-size: convert.to-rem(20);
+	line-height: 1.2;
+}
+
+@mixin large-text() {
+	font-weight: 400;
+	font-size: convert.to-rem(18);
+	line-height: 1.2;
+}
+
+@mixin main-text() {
+	font-weight: 400;
+	font-size: convert.to-rem(16);
+	line-height: 1.2;
+}
+
+@mixin additional-text() {
+	font-weight: 400;
+	font-size: convert.to-rem(14);
+	line-height: 1.2;
+}
+
+@mixin small-text() {
+	font-weight: 400;
+	font-size: convert.to-rem(12);
+	line-height: 1.2;
+}
+
+@mixin helper-text() {
+	font-weight: 400;
+	font-size: convert.to-rem(10);
+	line-height: 1.2;
+}
+
+@mixin link-1() {
+	font-weight: 400;
+	text-underline-offset: 2px;
+	width: fit-content;
+	text-decoration: underline;
+	@include transition.create(color);
+
+	@include interaction.hover {
+		color: colors.$blue;
+	}
+
+	@include interaction.active {
+		color: colors.$blue;
+	}
+
+	@include interaction.disabled {
+		opacity: 0.7;
+	}
+}
