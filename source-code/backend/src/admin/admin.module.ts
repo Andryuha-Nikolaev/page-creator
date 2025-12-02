@@ -1,62 +1,62 @@
-import { Database, Resource, getModelByName } from '@adminjs/prisma';
-import AdminJS, { ResourceWithOptions } from 'adminjs';
 import { PrismaService } from 'src/prisma.service';
 import { dark } from '@adminjs/themes';
 import { authenticate } from './decorators/auth.decorator';
 
-AdminJS.registerAdapter({ Database, Resource });
-
 export default import('@adminjs/nestjs').then(({ AdminModule }) =>
-  AdminModule.createAdminAsync({
-    useFactory: () => {
+  import('@adminjs/prisma').then(({ Database, Resource, getModelByName }) =>
+    import('adminjs').then((AdminJS) => {
+      AdminJS.default.registerAdapter({ Database, Resource });
+
       const prisma = new PrismaService();
 
-      return {
-        adminJsOptions: {
-          rootPath: '/admin',
-          resources: [
-            {
-              resource: {
-                model: getModelByName('User') as unknown,
-                client: prisma,
-              },
-              options: {
-                properties: {
-                  password: { type: 'password', isVisible: { edit: false } },
-                  email: {
-                    props: {
-                      type: 'email',
+      return AdminModule.createAdminAsync({
+        useFactory: () => ({
+          adminJsOptions: {
+            rootPath: '/admin',
+            resources: [
+              {
+                resource: {
+                  model: getModelByName('User') as unknown,
+                  client: prisma,
+                },
+                options: {
+                  properties: {
+                    password: { type: 'password', isVisible: { edit: false } },
+                    email: {
+                      props: {
+                        type: 'email',
+                      },
                     },
                   },
-                },
-                actions: {
-                  new: {
-                    isAccessible: false,
+                  actions: {
+                    new: {
+                      isAccessible: false,
+                    },
+                  },
+                  navigation: {
+                    icon: 'User',
                   },
                 },
-                navigation: {
-                  icon: 'User',
-                },
               },
+            ],
+            defaultTheme: dark.id,
+            availableThemes: [dark],
+            branding: {
+              companyName: 'PageCreator Admin',
             },
-          ] as Array<ResourceWithOptions>,
-          defaultTheme: dark.id,
-          availableThemes: [dark],
-          branding: {
-            companyName: 'PageCreator Admin',
           },
-        },
-        auth: {
-          authenticate,
-          cookieName: 'adminjs',
-          cookiePassword: 'secret',
-        },
-        sessionOptions: {
-          resave: true,
-          saveUninitialized: true,
-          secret: 'secret',
-        },
-      };
-    },
-  }),
+          auth: {
+            authenticate,
+            cookieName: 'adminjs',
+            cookiePassword: 'secret',
+          },
+          sessionOptions: {
+            resave: true,
+            saveUninitialized: true,
+            secret: 'secret',
+          },
+        }),
+      });
+    }),
+  ),
 );
