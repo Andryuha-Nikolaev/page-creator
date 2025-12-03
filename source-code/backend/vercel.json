@@ -3,14 +3,13 @@
     "builds": [
         {
             "src": "src/main.js",
-            "use": "@vercel/node",
-            "config": { "includeFiles": ["dist/**", "node_modules/swagger-ui-dist/**"] }
+            "use": "@vercel/node"
         }
     ],
     "routes": [
         {
             "src": "/(.*)",
-            "dest": "dist/src/main.js"
+            "dest": "/main.js"
         }
     ]
 }
