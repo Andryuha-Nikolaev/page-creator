@@ -12,15 +12,15 @@ import {
 import type { Request, Response } from 'express';
 import { AuthService } from './auth.service';
 import { AuthDto } from './dto/auth.dto';
-import { AUTH_CONSTANTS } from 'src/common/constants/auth.constants';
+import { AUTH_CONSTANTS } from '../common/constants/auth.constants';
 import { ApiOkResponse } from '@nestjs/swagger';
-import { UserResponseDto } from 'src/user/user.dto';
+import { UserResponseDto } from '../user/user.dto';
 import {
   ErrorCommonResponses,
   UnprocessableEntityResponse,
   UnauthorizedResponse,
   BadRequestResponse,
-} from 'src/common/decorators/error-response.decorator';
+} from '../common/decorators/error-response.decorator';
 
 @Controller('auth')
 export class AuthController {

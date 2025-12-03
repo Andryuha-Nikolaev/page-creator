@@ -8,12 +8,12 @@ import {
 import { JwtService } from '@nestjs/jwt';
 import { verify } from 'argon2';
 import { Response } from 'express';
-import { UserService } from 'src/user/user.service';
+import { UserService } from '../user/user.service';
 import { AuthDto } from './dto/auth.dto';
 import {
   AUTH_CONSTANTS,
   JWT_SIGN_CONSTANTS,
-} from 'src/common/constants/auth.constants';
+} from '../common/constants/auth.constants';
 
 @Injectable()
 export class AuthService {

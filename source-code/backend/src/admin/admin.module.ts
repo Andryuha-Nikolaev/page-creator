@@ -1,4 +1,4 @@
-import { PrismaService } from 'src/prisma.service';
+import { PrismaService } from '../prisma.service';
 import { authenticate } from './decorators/auth.decorator';
 
 export default import('@adminjs/nestjs').then(({ AdminModule }) =>
