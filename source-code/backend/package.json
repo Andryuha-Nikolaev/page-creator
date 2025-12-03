@@ -6,8 +6,7 @@
   "private": true,
   "license": "UNLICENSED",
   "scripts": {
-    "build": "npx prisma generate && npx prisma db push && nest build",
-    "build:noprisma": "nest build",
+    "build": "nest build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "start": "nest start",
     "start:dev": "nest start --watch",
@@ -24,7 +23,6 @@
     "@adminjs/express": "^6.1.1",
     "@adminjs/nestjs": "^7.0.0",
     "@adminjs/prisma": "^5.0.4",
-    "@adminjs/themes": "^1.0.1",
     "@babel/plugin-syntax-import-assertions": "^7.27.1",
     "@nestjs/common": "^11.0.1",
     "@nestjs/config": "^4.0.2",
@@ -74,6 +72,9 @@
     "tsconfig-paths": "^4.2.0",
     "typescript": "^5.7.3",
     "typescript-eslint": "^8.20.0"
+  },
+  "optionalDependencies": {
+    "@rollup/rollup-linux-x64-gnu": "4.53.3"
   },
   "jest": {
     "moduleFileExtensions": [
