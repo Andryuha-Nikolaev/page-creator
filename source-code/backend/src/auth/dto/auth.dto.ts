@@ -3,7 +3,7 @@ import { IsEmail, IsString, MinLength } from 'class-validator';
 import {
   ToLowerCaseString,
   TrimString,
-} from '../../common/decorators/transform-value.decorator';
+} from 'src/common/decorators/transform-value.decorator';
 
 export class AuthDto {
   @TrimString()

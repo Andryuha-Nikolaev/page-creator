@@ -1,9 +1,9 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { hash } from 'argon2';
-import { AuthDto } from '../auth/dto/auth.dto';
+import { AuthDto } from 'src/auth/dto/auth.dto';
 import { UserDto } from './user.dto';
 
-import { PrismaService } from '../prisma.service';
+import { PrismaService } from 'src/prisma.service';
 
 @Injectable()
 export class UserService {

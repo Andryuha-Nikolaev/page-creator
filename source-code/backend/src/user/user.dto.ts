@@ -1,10 +1,10 @@
 import { ApiProperty, ApiPropertyOptional, OmitType } from '@nestjs/swagger';
 import { IsEmail, IsOptional, IsString, MinLength } from 'class-validator';
-import { User } from '../_gen/prisma-class/user';
+import { User } from 'src/_gen/prisma-class/user';
 import {
   ToLowerCaseString,
   TrimString,
-} from '../common/decorators/transform-value.decorator';
+} from 'src/common/decorators/transform-value.decorator';
 
 export class UserDto {
   @TrimString()

@@ -7,8 +7,8 @@ import {
   UsePipes,
   ValidationPipe,
 } from '@nestjs/common';
-import { Auth } from '../auth/decorators/auth.decorator';
-import { CurrentUser } from '../auth/decorators/user.decorator';
+import { Auth } from 'src/auth/decorators/auth.decorator';
+import { CurrentUser } from 'src/auth/decorators/user.decorator';
 import { UserDto, UserResponseDto, UserUpdateResponseDto } from './user.dto';
 import { UserService } from './user.service';
 import { ApiOkResponse } from '@nestjs/swagger';
@@ -16,7 +16,7 @@ import {
   ErrorCommonResponses,
   UnauthorizedResponse,
   UnprocessableEntityResponse,
-} from '../common/decorators/error-response.decorator';
+} from 'src/common/decorators/error-response.decorator';
 
 @Controller('user/profile')
 export class UserController {
